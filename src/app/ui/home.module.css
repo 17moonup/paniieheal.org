@@ -127,8 +127,6 @@
   place-items: center; 
   position: absolute;
   max-width: 140px;
-  border-left: solid aliceblue 1px;
-  border-right: solid aliceblue 1px;
   left: max(calc(200px * 8), 100%);
   animation-name: scrollLeft;
   animation-duration: 60s;

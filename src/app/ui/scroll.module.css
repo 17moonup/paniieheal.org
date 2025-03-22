@@ -1,10 +1,12 @@
+/* 滚动图片容器 */
 .scrollingContainer {
   width: 100%;
   overflow: hidden;
   margin-top: 1rem;
-  position: relative; 
+  position: relative; /* 为加载遮罩层提供定位基础 */
 }
 
+/* 滚动图片内部容器 */
 .scrollingInner {
   display: flex;
   flex-direction: row;
@@ -27,6 +29,7 @@
   place-items: center;
 }
 
+/* 图片样式 */
 .img {
   width: 100%;
   height: auto;
@@ -36,6 +39,17 @@
   animation: fadeIn 0.3s ease-in-out forwards;
 }
 
+/* 淡入效果 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 加载状态遮罩 */
 .loadingOverlay {
   position: absolute;
   top: 0;
@@ -49,6 +63,7 @@
   z-index: 10;
 }
 
+/* 加载动画 */
 .loadingSpinner {
   width: 40px;
   height: 40px;
@@ -63,21 +78,25 @@
   100% { transform: rotate(360deg); }
 }
 
+/* 关键：媒体查询 */
 @media (max-width: 600px) {
   .imageContainer {
     width: 160px;
     margin-right: 8px;
   }
 }
+
+/* 向左滚动动画 */
 @keyframes scrollLeft {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(-50% - var(--gap)/2)); 
+    transform: translateX(calc(-50% - var(--gap)/2)); /* 更精确的计算 */
   }
 }
 
+/* 向右滚动动画 */
 @keyframes scrollRight {
   0% {
     transform: translateX(calc(-50% - var(--gap)/2));
@@ -87,6 +106,7 @@
   }
 }
 
+/* 适配Retina屏 */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .img {
     image-rendering: -webkit-optimize-contrast; /* 提高图片锐度 */

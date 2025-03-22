@@ -41,7 +41,7 @@ const ScrollingImage = ({
           throw new Error('Failed to load image list');
         }
         const imagesList = await response.json() as string[];
-       
+        // 确保有足够多的图片来填充容器
         const duplicatedImages = [...imagesList, ...imagesList, ...imagesList]; 
         setImages(duplicatedImages);
       } catch (error) {
@@ -62,7 +62,7 @@ const ScrollingImage = ({
           setIsVisible(entry.isIntersecting);
         });
       },
-      { threshold: 0.1 } 
+      { threshold: 0.1 } // 只要有10%的元素可见就触发
     );
     
     observer.observe(containerRef.current);
@@ -73,16 +73,21 @@ const ScrollingImage = ({
       }
     };
   }, []);
+  
+  // 当所有图片都加载完成时设置状态
   useEffect(() => {
     if (images.length > 0 && loadedCount >= Math.min(images.length, 5)) {
+      // 至少加载5张图片或全部图片后开始动画
       setImagesLoaded(true);
     }
   }, [loadedCount, images.length]);
   
+  // 图片加载完成处理函数
   const handleImageLoaded = () => {
     setLoadedCount(prev => prev + 1);
   };
-  
+
+  // 动画名称和状态
   const animationName = direction === 'ltr' ? 'scrollRight' : 'scrollLeft';
   const animationPlayState = isVisible && imagesLoaded ? 'running' : 'paused';
 
@@ -110,7 +115,7 @@ const ScrollingImage = ({
               width={imageWidth}
               height={imageWidth}
               className={styles.img}
-              priority={index < 5} 
+              priority={index < 5} // 前5张图片优先加载
               onLoad={handleImageLoaded}
               sizes={`${imageWidth}px`}
               placeholder="blur"
