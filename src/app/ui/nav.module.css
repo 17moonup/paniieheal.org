@@ -1,15 +1,13 @@
 @media (prefers-color-scheme: dark) {
-  :root {
     .links a {
       color: #b9b3ca;
     }
 
-  .link.active {
-    color: rgb(142, 113, 189);
-    font-weight: bold;
+    .link.active {
+      color: rgb(142, 113, 189);
+      font-weight: bold;
+    }
   }
-}
-}
 
 .nav {
   display: grid;

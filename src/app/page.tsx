@@ -6,6 +6,8 @@ import PhotoCard from './components/PhotoCard';
 import LectureCard from './components/LectureCard';
 import Image from 'next/image';
 import { Metadata } from 'next';
+import { FaGithub } from 'react-icons/fa';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Home',
@@ -46,7 +48,19 @@ export default function Home() {
       </main>
 
       <footer className={styles.footer}>
-        <span>  &copy; 2023-2025 Paniieheal. All rights reserved.  </span>
+        <span>  &copy; 2023-2025 &nbsp;
+        <Link
+          href="https://github.com/17moonup/paniieheal.org.git"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.Paniie}
+          >
+           <FaGithub /> Paniieheal.&nbsp;
+            
+        </Link>  
+        
+        &nbsp;
+           All rights reserved.  </span>
          &nbsp;
         <a href="about.tsx">About</a>
         &nbsp;  |  &nbsp;  

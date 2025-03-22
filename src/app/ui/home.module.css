@@ -170,6 +170,11 @@
   align-items: center;
 }
 
+.footer a:hover {
+  color: rgb(219, 186, 0);
+  transition-duration: 1s;
+}
+
 
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
