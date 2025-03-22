@@ -29,10 +29,8 @@ const ScrollingImage = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   
-  // 图片加载状态跟踪
   const [loadedCount, setLoadedCount] = useState(0);
   
-  // 加载图片列表
   useEffect(() => {
     const loadImages = async () => {
       try {
@@ -74,20 +72,18 @@ const ScrollingImage = ({
     };
   }, []);
   
-  // 当所有图片都加载完成时设置状态
   useEffect(() => {
     if (images.length > 0 && loadedCount >= Math.min(images.length, 5)) {
-      // 至少加载5张图片或全部图片后开始动画
+  
       setImagesLoaded(true);
     }
   }, [loadedCount, images.length]);
   
-  // 图片加载完成处理函数
+
   const handleImageLoaded = () => {
     setLoadedCount(prev => prev + 1);
   };
 
-  // 动画名称和状态
   const animationName = direction === 'ltr' ? 'scrollRight' : 'scrollLeft';
   const animationPlayState = isVisible && imagesLoaded ? 'running' : 'paused';
 
