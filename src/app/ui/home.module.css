@@ -16,17 +16,6 @@
   background-size: cover;
 }
 
-@media (prefers-color-scheme: dark) {
-  .page {
-    --gray-rgb: 255, 255, 255;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
-  }
-  .details a {
-    color: aliceblue;
-  }
-}
-
 .header {
   font-family: "Rock Salt", serif;
   position: fixed;
@@ -99,9 +88,10 @@
   text-align: center;
   text-shadow: 1px #E2E2B6;
 }
+
 .details a {
   font-weight: 400;
-  color: rgb(52, 55, 58);
+  color: var(--global-text);
 }
 .details:hover {
   scale: 110%;
@@ -173,25 +163,6 @@
 .footer a:hover {
   color: rgb(219, 186, 0);
   transition-duration: 1s;
-}
-
-
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
-
-  .footer a:hover {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
 }
 
 @media (max-width: 600px) {

@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import styles from '../ui/nav.module.css';
 import Image  from 'next/image';
+import { notFound } from 'next/navigation';
 
 const links = [
   { name: 'Home', href: '/' },
