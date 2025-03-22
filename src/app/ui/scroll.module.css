@@ -6,7 +6,6 @@
   position: relative; /* 为加载遮罩层提供定位基础 */
 }
 
-/* 滚动图片内部容器 */
 .scrollingInner {
   display: flex;
   flex-direction: row;
@@ -20,7 +19,6 @@
   will-change: transform; /* 提示浏览器动画性能优化 */
 }
 
-/* 单个图片容器 */
 .imageContainer {
   flex: 0 0 auto;
   width: var(--image-width, 220px);
@@ -29,7 +27,6 @@
   place-items: center;
 }
 
-/* 图片样式 */
 .img {
   width: 100%;
   height: auto;
@@ -38,7 +35,6 @@
   opacity: 0;
   animation: fadeIn 0.3s ease-in-out forwards;
 }
-
 /* 淡入效果 */
 @keyframes fadeIn {
   from {
@@ -49,7 +45,6 @@
   }
 }
 
-/* 加载状态遮罩 */
 .loadingOverlay {
   position: absolute;
   top: 0;
@@ -63,7 +58,6 @@
   z-index: 10;
 }
 
-/* 加载动画 */
 .loadingSpinner {
   width: 40px;
   height: 40px;
@@ -78,7 +72,6 @@
   100% { transform: rotate(360deg); }
 }
 
-/* 关键：媒体查询 */
 @media (max-width: 600px) {
   .imageContainer {
     width: 160px;
@@ -86,7 +79,6 @@
   }
 }
 
-/* 向左滚动动画 */
 @keyframes scrollLeft {
   0% {
     transform: translateX(0);
@@ -96,7 +88,6 @@
   }
 }
 
-/* 向右滚动动画 */
 @keyframes scrollRight {
   0% {
     transform: translateX(calc(-50% - var(--gap)/2));
