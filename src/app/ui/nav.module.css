@@ -1,0 +1,108 @@
+@media (prefers-color-scheme: dark) {
+  :root {
+    .links a {
+      color: #b9b3ca;
+    }
+
+  .link.active {
+    color: rgb(142, 113, 189);
+    font-weight: bold;
+  }
+}
+}
+
+.nav {
+  display: grid;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background-color: var(--background);
+  height: 80px; /* 导航栏高度，可以根据实际情况调整 */
+  grid-template-columns: 2fr 1fr;
+  padding: 2rem 5rem 0 5rem;
+  margin-bottom: 1rem;
+}
+
+.nav::after {
+  content: "";
+  position: fixed; /* 固定到视口 */
+  top: 80px; /* 和 .nav 的高度一致，保证紧贴下方 */
+  left: 0;
+  right: 0;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  height: 50px; /* 渐变区域的高度，可以调整 */
+  background: linear-gradient(to bottom,
+   var(--background) 20%,
+   rgba(219, 219, 205, 0)); /* 渐变颜色 */
+  z-index: 9; /* 低于 .nav，高于主体内容 */
+  pointer-events: none; /* 允许点击穿透 */
+}
+
+.b {
+  font-family: "Rock Salt";
+  font-weight: bold;
+  color: transparent;
+  background-image: linear-gradient(90deg, #D95F59, #8C3061, #522258);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #D95F59, #8C3061, #522258, #222222, #8C3061, #D95F59);
+  background-size: 200%;
+  animation: flow 4s linear infinite;
+}
+
+@keyframes flow {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.links a {
+  color: rgb(0, 0, 0);
+  margin: 1rem;
+}
+
+.links a:hover {
+  color: rgb(192, 171, 206);
+  transition: 0.3s;
+}
+
+.link.active {
+  color: rgb(142, 113, 189);
+  font-weight: bold;
+}
+
+@media (max-width: 1000px) {
+  .logo {
+    height: 0;
+    width: 0;
+  }
+
+  .nav {
+    grid-template-columns: 1fr;
+    grid-template-rows: 2fr 1fr;
+    height: 100px;
+    place-items: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav::after {
+    top: 100px;
+  }
+
+  .b {
+    font-size: 1.5rem;
+  }
+  
+  .links a {
+    margin: 0.3rem;
+  }
+
+}

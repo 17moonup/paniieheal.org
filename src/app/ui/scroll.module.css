@@ -1,0 +1,55 @@
+/* 滚动图片容器 */
+.scrollingContainer {
+  width: 100%;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+/* 滚动图片内部容器 */
+.scrollingInner {
+  display: flex;
+  flex-direction: row;
+  width: max-content;
+  animation: scrollLeft 50s linear infinite; /* 默认动画，可以在组件中覆盖 */
+  --image-width: 220px; /* 默认图片宽度，可以在组件中覆盖 */
+  --gap: 16px; /* 默认图片间距，可以在组件中覆盖 */
+}
+
+/* 单个图片容器 */
+.imageContainer {
+  flex: 0 0 auto;
+  width: var(--image-width);
+  margin-right: var(--gap);
+  text-align: center;
+  place-items: center;
+}
+
+/* 图片样式 */
+.img {
+  width: 100%; /* 确保图片宽度自适应容器 */
+  height: auto; /* 保持图片比例 */
+  display: block; /* 移除图片底部可能出现的间隙 */
+  border-radius: 8px;
+}
+
+/* 关键：媒体查询 */
+@media (max-width: 600px) {
+  .imageContainer {
+    width: 160px;
+    margin-right: 8px;
+  }
+}
+
+/* 动画 (示例，你可以根据需要修改) */
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%); /* 或者根据图片总宽度计算 */
+  }
+}
+
+/* 适配Retina屏 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

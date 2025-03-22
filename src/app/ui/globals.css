@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Almendra+SC&family=Baskervville+SC&family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&family=Gentium+Plus:ital,wght@0,400;0,700;1,400;1,700&family=Gloria+Hallelujah&family=Rock+Salt&display=swap');
+
+:root {
+  --background: #f4f4f2;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: rgb(15,15,15);
+    --global-text: #f5f6f4;
+    --foreground: #ededed;
+  }
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: "Gentium Plus serif";
+  font-weight: 400;
+  font-size: 12pt;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+/*
+.header {
+  color: transparent;
+  background-image: linear-gradient(90deg, #D95F59, #8C3061, #522258);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #D95F59, #8C3061, #522258, #222222, #8C3061, #D95F59);
+  background-size: 200%;
+  animation: flow 4s linear infinite;
+}
+
+@keyframes flow {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+*/
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scrollRight {
+  0% {
+    transform: translateX(-50%); /*Start at -50%*/
+  }
+  100% {
+    transform: translateX(0%); /*End at 0*/
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}

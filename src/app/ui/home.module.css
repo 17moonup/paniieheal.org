@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Almendra+SC&family=Baskervville+SC&family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&family=Gentium+Plus:ital,wght@0,400;0,700;1,400;1,700&family=Gloria+Hallelujah&family=Rock+Salt&display=swap');
+
+.page {
+  --gray-rgb: 0, 0, 0;
+  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
+  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
+  display: grid;
+  margin: auto;
+  align-items: center;
+  justify-items: center;
+  min-height: 100svh;
+  line-height: 1.5;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+@media (prefers-color-scheme: dark) {
+  .page {
+    --gray-rgb: 255, 255, 255;
+    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
+    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
+  }
+  .details a {
+    color: aliceblue;
+  }
+}
+
+.header {
+  font-family: "Rock Salt", serif;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  text-align: center;
+  font-size: 24pt; 
+  line-height: 2;
+  background-color: var(--background);
+  z-index: 127;
+}
+
+.header a {
+  color: transparent;
+  background-image: linear-gradient(90deg, #D95F59, #8C3061, #522258);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #ff827b, #a83773, #522258, #ea6c6c, #8C3061, #e68686);
+  background-size: 200%;
+  animation: flow 8s linear infinite;
+}
+
+@keyframes flow {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.main {
+  width: 90%;
+  margin-top: 6rem;
+}
+
+.cards {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr)); 
+  grid-template-rows: repeat(2, 1fr);
+  column-gap: 3px; 
+  row-gap: 27px;
+}
+
+.imageContainer {
+  width: 100%;
+  height: 285px;
+  position: relative;
+}
+
+.card {
+  display: flex;
+  background-color: var(--background);
+  flex-direction: column;
+  overflow: visible;
+  height: auto;
+  padding: 3% 5%;
+
+}
+
+.details {
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
+  border-radius: 2px;
+  text-align: center;
+  text-shadow: 1px #E2E2B6;
+}
+.details a {
+  font-weight: 400;
+  color: rgb(52, 55, 58);
+}
+.details:hover {
+  scale: 110%;
+  transition-duration: 1s;
+}
+
+.projects {
+  width: 100%;
+  max-width: 1536px;
+  margin-inline: auto;
+  position: relative;
+  margin: 3rem auto;
+  min-height: 145px;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 1) 20%,
+    rgba(0, 0, 0, 1) 80%,
+    rgba(0, 0, 0, 0)
+  );
+  border: gainsboro 1px double;
+}
+
+@keyframes scrollLeft {
+  to {
+    left: -200px;
+  }
+}
+
+.item {
+  text-align: center;
+  place-items: center; 
+  position: absolute;
+  max-width: 140px;
+  border-left: solid aliceblue 1px;
+  border-right: solid aliceblue 1px;
+  left: max(calc(200px * 8), 100%);
+  animation-name: scrollLeft;
+  animation-duration: 60s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-play-state: running; 
+  animation-delay: -15s;
+}
+
+.item:hover {
+  animation-play-state: paused;
+}
+
+.footer {
+  margin: 2rem auto 0 auto;
+  width: 80%;
+  border-top: 1px solid grey;
+  color: gray;
+  font-family: "Gentium Plus serif";
+  padding: 7px;
+  line-height: 1.5;
+}
+
+.footer a {
+  font-family: "Rokkitt";
+  text-decoration: underline;
+  color: slategray;
+  text-align: left;
+  align-items: center;
+}
+
+
+/* Enable hover only on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  a.primary:hover {
+    background: var(--button-primary-hover);
+    border-color: transparent;
+  }
+
+  a.secondary:hover {
+    background: var(--button-secondary-hover);
+    border-color: transparent;
+  }
+
+  .footer a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 32px;
+  }
+
+  .header {
+    font-size: 18pt;
+  }
+
+  .main {
+    align-items: center;
+    margin-top: 3rem;
+    border: none;
+  }
+
+  .main ol {
+    text-align: center;
+  }
+
+  .item {
+    animation-duration: 45s;
+    animation-delay: -35s;
+  }
+
+  .ctas {
+    flex-direction: column;
+  }
+
+  .ctas a {
+    font-size: 14px;
+    height: 40px;
+    padding: 0 16px;
+  }
+
+  a.secondary {
+    min-width: auto;
+  }
+
+  .footer {
+    font-size: 10.5pt;
+    align-items: center;
+    justify-content: center;
+  }
+}
