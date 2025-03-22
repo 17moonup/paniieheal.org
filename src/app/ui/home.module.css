@@ -90,8 +90,10 @@
 }
 
 .details a {
+  font-variant: small-caps;
   font-weight: 400;
   color: var(--global-text);
+
 }
 .details:hover {
   scale: 110%;

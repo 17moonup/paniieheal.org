@@ -4,7 +4,7 @@ const MusicCard = ({ delay }: { delay: number }) => {
   return (
     <BaseCard
       imageDir="/img/music/covers"
-      title="Musics"
+      title="musics"
       delay={delay}
     />
   );

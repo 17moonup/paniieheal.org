@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import styles from '../ui/home.module.css';
-
+import Link from 'next/link';
 interface CardProps {
   title: string;
   src: string;
@@ -19,7 +19,10 @@ const Card = ({ title, src }: CardProps) => {
           style={{ objectFit: 'cover', borderRadius: '16px'}}
         />
         <div className={styles.details}>
-        {title}
+          <Link
+            href={'../dashboard/`${title}`'}>
+              {title}
+          </Link>
         </div>
       </div>
     </div>
