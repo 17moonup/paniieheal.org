@@ -1,5 +1,4 @@
 'use client';
-
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import styles from '../ui/nav.module.css';
@@ -10,7 +9,7 @@ const links = [
   { name: 'Posts', href: '/posts' },
   { name: 'Books', href: '/books' },
   { name: 'Films', href: '/films' },
-  { name: 'Musics', href: '/music' },
+  { name: 'Musics', href: '/musics' },
   { name: 'P_Portfolio', href: '/portfolio' },
 ];
 

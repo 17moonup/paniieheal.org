@@ -83,7 +83,7 @@ const BaseCard = ({ imageDir, title, delay }: BaseCardProps) => {
 
       <div className={styles.details}>
         <Link 
-          href={'../dashboard/'+ title}
+          href={'../'+title}
         > 
         {title}
         </Link>

@@ -5,32 +5,30 @@ import styles from "../ui/scroll.module.css";
 
 interface ScrollingImageProps {
   imageDir: string;
-  direction: 'ltr' | 'rtl';
-  animationDuration?: number;
-  imageWidth?: number;
-  gap?: number;
+  direction: 'ltr' | 'rtl'; // 'ltr' for left-to-right, 'rtl' for right-to-left
+  animationDuration?: number; // Optional: duration of animation in seconds
+  imageWidth?: number; // Optional: Width of the image
+  gap?: number; // Optional: gap between images
 }
 
 interface CustomCSSProperties extends React.CSSProperties {
   '--gap'?: string;
   '--image-width'?: string;
-  '--animation-play-state'?: string;
 }
 
 const ScrollingImage = ({
   imageDir,
   direction,
-  animationDuration = 50,
-  imageWidth = 220,
-  gap = 16,
+  animationDuration, // Default animation duration
+  imageWidth = 220, // Default image width
+  gap = 16, // Default gap size
 }: ScrollingImageProps) => {
   const [images, setImages] = useState<string[]>([]);
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  
   const [loadedCount, setLoadedCount] = useState(0);
-  
+
+  // 加载图片列表
   useEffect(() => {
     const loadImages = async () => {
       try {
@@ -39,7 +37,7 @@ const ScrollingImage = ({
           throw new Error('Failed to load image list');
         }
         const imagesList = await response.json() as string[];
-        // 确保有足够多的图片来填充容器
+        // 确保有足够多的图片来填充容器，三倍数量更有助于无缝循环
         const duplicatedImages = [...imagesList, ...imagesList, ...imagesList]; 
         setImages(duplicatedImages);
       } catch (error) {
@@ -50,54 +48,32 @@ const ScrollingImage = ({
     loadImages();
   }, [imageDir]);
   
-  // 使用 IntersectionObserver 检测元素是否在视口中
-  useEffect(() => {
-    if (!containerRef.current) return;
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          setIsVisible(entry.isIntersecting);
-        });
-      },
-      { threshold: 0.1 } // 只要有10%的元素可见就触发
-    );
-    
-    observer.observe(containerRef.current);
-    
-    return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
-      }
-    };
-  }, []);
-  
+  // 当足够多的图片加载完成时触发动画
   useEffect(() => {
     if (images.length > 0 && loadedCount >= Math.min(images.length, 5)) {
-  
+      // 至少加载5张图片或全部图片后允许动画
       setImagesLoaded(true);
     }
   }, [loadedCount, images.length]);
   
-
+  // 处理图片加载完成事件
   const handleImageLoaded = () => {
     setLoadedCount(prev => prev + 1);
   };
 
+  // 动画名称
   const animationName = direction === 'ltr' ? 'scrollRight' : 'scrollLeft';
-  const animationPlayState = isVisible && imagesLoaded ? 'running' : 'paused';
 
   return (
     <div className={styles.scrollingContainer}>
       <div
         ref={containerRef}
-        className={styles.scrollingInner}
+        className={`${styles.scrollingInner} ${imagesLoaded ? styles.animationActive : ''}`}
         style={{
-          animationName,
+          animationName: animationName,
           animationDuration: `${animationDuration}s`,
           '--gap': `${gap}px`,
           '--image-width': `${imageWidth}px`,
-          '--animation-play-state': animationPlayState,
         } as CustomCSSProperties}
       >
         {images.map((image, index) => (
@@ -120,11 +96,6 @@ const ScrollingImage = ({
           </div>
         ))}
       </div>
-      {!imagesLoaded && (
-        <div className={styles.loadingOverlay}>
-          <div className={styles.loadingSpinner}></div>
-        </div>
-      )}
     </div>
   );
 };

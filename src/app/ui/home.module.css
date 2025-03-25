@@ -90,11 +90,10 @@
 }
 
 .details a {
-  font-variant: small-caps;
-  font-weight: 400;
+  text-transform: capitalize;
   color: var(--global-text);
-
 }
+
 .details:hover {
   scale: 110%;
   transition-duration: 1s;

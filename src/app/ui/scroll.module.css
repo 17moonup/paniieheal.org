@@ -3,22 +3,27 @@
   width: 100%;
   overflow: hidden;
   margin-top: 1rem;
-  position: relative; /* 为加载遮罩层提供定位基础 */
 }
 
+/* 滚动图片内部容器 */
 .scrollingInner {
   display: flex;
   flex-direction: row;
   width: max-content;
-  animation-name: scrollLeft;
   animation-duration: 50s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  animation-play-state: var(--animation-play-state, paused);
+  animation-play-state: paused; /* 默认暂停动画 */
   --gap: 16px;
   will-change: transform; /* 提示浏览器动画性能优化 */
 }
 
+/* 激活动画的类 */
+.animationActive {
+  animation-play-state: running; /* 当图片加载后运行动画 */
+}
+
+/* 单个图片容器 */
 .imageContainer {
   flex: 0 0 auto;
   width: var(--image-width, 220px);
@@ -27,6 +32,7 @@
   place-items: center;
 }
 
+/* 图片样式 */
 .img {
   width: 100%;
   height: auto;
@@ -35,6 +41,7 @@
   opacity: 0;
   animation: fadeIn 0.3s ease-in-out forwards;
 }
+
 /* 淡入效果 */
 @keyframes fadeIn {
   from {
@@ -45,33 +52,7 @@
   }
 }
 
-.loadingOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-}
-
-.loadingSpinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #3498db;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
+/* 关键：媒体查询 */
 @media (max-width: 600px) {
   .imageContainer {
     width: 160px;
@@ -79,6 +60,7 @@
   }
 }
 
+/* 向左滚动动画 */
 @keyframes scrollLeft {
   0% {
     transform: translateX(0);
@@ -88,6 +70,7 @@
   }
 }
 
+/* 向右滚动动画 */
 @keyframes scrollRight {
   0% {
     transform: translateX(calc(-50% - var(--gap)/2));

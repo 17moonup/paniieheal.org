@@ -20,7 +20,7 @@ const Card = ({ title, src }: CardProps) => {
         />
         <div className={styles.details}>
           <Link
-            href={'../dashboard/`${title}`'}>
+            href={'../'+ title}>
               {title}
           </Link>
         </div>
