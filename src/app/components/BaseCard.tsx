@@ -64,13 +64,10 @@ const BaseCard = ({ imageDir, title, delay }: BaseCardProps) => {
           <Image
             src={images[currentImageIndex]}
             alt={`${title} cover`}
-            className={`${styles.image} ${isTransitioning ? styles.transition : ''}`}
-            width={250}
-            height={250}
-            style={{ objectFit: 'cover', borderRadius: '16px'  }}
+            className={ `${isTransitioning ? styles.transition : ''}`}
+            fill
             onError={(e) => {
               console.error('MotherFuckerFailed to load images:', e.currentTarget.src);
-           //     e.currentTarget.src = 
           }}
          />
         ) : (
@@ -80,15 +77,14 @@ const BaseCard = ({ imageDir, title, delay }: BaseCardProps) => {
       
         </motion.div>
       </AnimatePresence>
-
+    </div>
       <div className={styles.details}>
-        <Link 
+        <Link
           href={'../'+title}
         > 
         {title}
         </Link>
       </div>
-    </div>
   </div>
   );
 };

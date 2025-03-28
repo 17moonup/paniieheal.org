@@ -18,13 +18,13 @@ const Card = ({ title, src }: CardProps) => {
           height={250}
           style={{ objectFit: 'cover', borderRadius: '16px'}}
         />
-        <div className={styles.details}>
+      </div>
+      <div className={styles.details}>
           <Link
             href={'../'+ title}>
               {title}
           </Link>
         </div>
-      </div>
     </div>
   );
 };

@@ -57,6 +57,7 @@
 
 .cards {
   display: grid;
+  margin: 1rem auto;
   align-items: center;
   justify-items: center;
   grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr)); 
@@ -66,10 +67,17 @@
 }
 
 .imageContainer {
-  width: 100%;
-  height: 285px;
+  width: 250px;
+  height: 250px;
   position: relative;
 }
+
+.imageContainer img {
+  object-fit: cover;  /* 控制图片填充方式 */
+  width: 100%;  /* 覆盖 Next.js 的内联样式 */
+  border-radius: 16px;
+}
+
 
 .card {
   display: flex;
@@ -78,15 +86,13 @@
   overflow: visible;
   height: auto;
   padding: 3% 5%;
-
 }
 
 .details {
   font-size: 1.25rem;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   border-radius: 2px;
   text-align: center;
-  text-shadow: 1px #E2E2B6;
 }
 
 .details a {
