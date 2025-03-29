@@ -17,7 +17,7 @@ export default function Terms () {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">1. Acceptance of Terms</h2>
         <p>
-          By using <strong>Paniieheal Truth Store</strong> (the "Site"), you agree to these Terms of Use ("Terms") and our <Link href="/privacy-policy" className="text-blue-600 hover:underline">Privacy Policy</Link>. If you disagree, do not use the Site.
+         By using <strong>Paniieheal Truth Store</strong> (the 'Site'), you agree to these Terms of Use ('Terms') and our <Link href="/privacy-policy" className="text-blue-600 hover:underline">Privacy Policy</Link>. If you disagree, do not use the Site.
         </p>
       </section>
 
