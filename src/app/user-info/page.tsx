@@ -1,10 +1,11 @@
 import { auth } from "@/app/auth";
 import Image from "next/image";
+import styles from '../ui/lecture.module.css';
 
 export default async function UserInfo() {
   const session = await auth();
   return (
-    <div>
+    <div className={styles.main}>
       <h1> Paniieheal User Info </h1>
       <p> User signed with name: {session?.user?.name} </p>
       <p> User signed with e-mail: {session?.user?.email} </p>

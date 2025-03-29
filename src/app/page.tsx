@@ -68,8 +68,18 @@ export default function Home() {
         &nbsp;  |  &nbsp;  
         <a href="t">Site Analytics</a>
         &nbsp;  |  &nbsp;  
+        <a href="privacy/">Privacy Policy</a>
+        &nbsp;  |  &nbsp;  
+        <Link href="/terms" locale="es">
+          Términos de servicio
+        </Link>
+        &nbsp;  |  &nbsp;  
+        <a href="mailto:me@paniieheal.org">
+            Contact Us
+        </a>
+        &nbsp;  |  &nbsp;
         <a href="c">RSS</a>
-    
+        &nbsp;  |  &nbsp;
       </footer>
     </div>
   );
