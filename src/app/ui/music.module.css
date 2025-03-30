@@ -1,11 +1,9 @@
 .page {
   display: block;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 10fr 7fr;
   margin: auto;
   align-items: center;
   justify-items: center;
-  min-height: 100svh;
+  min-height: 100vh;
   line-height: 1.5;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -13,31 +11,76 @@
   background-size: cover;
 }
 
+.main {
+  scroll-snap-type: proximity;
+  scrollbar-width: none;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.main::-webkit-scrollbar {
+  display: none; 
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  line-height: normal;
+  scroll-snap-align: center;
+}
+
 .scroll {
   margin-top: 5rem;
 }
 
-.section {
-  margin: 0;
+.content h1 {
+  font-size: clamp(2rem, 5vw, 4rem); 
+  color: var(--music-text);
+  text-shadow: green 1px 1px;
+  text-align: center;
+  padding: 2rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  padding-bottom: 15vh;
+  animation: fade-in 1.0s ease-in;
 }
 
 @keyframes fade-in {
   from {
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 0.2;
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
-.fadeIn {
-  animation: fade-in ease 1.5s;
-animation-fill-mode: forwards;
+.bottom {
+  content: "";
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to 
+  top,
+   var(--background) 20%, rgba(219, 219, 205, 0));
+  z-index: 9;
+  pointer-events: none;
 }
 
-  @media (max-width: 1000px) {
+@media (prefers-reduced-motion: no-preference) {
+  .section {
+    animation: fade-in 3.5s ease-out;
+  }
+}
+
+@media (max-width: 1000px) {
     .logo {
       width: 0;
       height: auto;
@@ -50,3 +93,16 @@ animation-fill-mode: forwards;
       border-radius: 16px;
     }
   }
+
+/* TODO 
+animation infinte
+trigger nesscessity
+scroll-snap
+position: sticky
+position: fixed
+view-timeline
+prefers-reduced-motion: no-preference
+jusitify align 
+  content items ...
+transform translateY(20)
+content:""

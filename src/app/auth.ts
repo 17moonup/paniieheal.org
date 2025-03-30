@@ -6,7 +6,16 @@ import Twitter from "next-auth/providers/twitter";
 export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: [
     Google,
-    GitHub,
+    GitHub({
+      profile(profile) {
+        return {
+          id: profile.id.toString(),
+          name: profile.name || profile.login,
+          email: profile.email,
+          image: profile.avatar_url,
+        };
+      },
+    }),
     Apple,
     Twitter,
   ],

@@ -6,7 +6,7 @@
   right: 0;
   z-index: 10;
   background-color: var(--background);
-  height: 80px; /* 导航栏高度，可以根据实际情况调整 */
+  height: 80px;
   grid-template-columns: 2fr 1fr;
   padding: 2rem 5rem 0 5rem;
   margin-bottom: 1rem;
@@ -14,8 +14,8 @@
 
 .nav::after {
   content: "";
-  position: fixed; /* 固定到视口 */
-  top: 80px; /* 和 .nav 的高度一致，保证紧贴下方 */
+  position: fixed;
+  top: 80px;
   left: 0;
   right: 0;
   padding-top: 1rem;
