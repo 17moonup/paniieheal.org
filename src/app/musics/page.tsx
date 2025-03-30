@@ -24,7 +24,7 @@ export default function Home() {
                 <div className={styles.content}>
                     <h1>The love of music.</h1>
                     <h1>The music of love.</h1>
-                    <h1>The life with music & love.</h1>
+                    <h1><i>&#9839;</i> The Life with Music & Love <i>&#9839;</i></h1>
                 </div>
             </section>
         </main>
