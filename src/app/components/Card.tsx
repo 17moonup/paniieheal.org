@@ -13,18 +13,15 @@ const Card = ({ title, src }: CardProps) => {
         <Image
           src={src}
           alt={`${title} cover`}
-          className={`${styles.image}`}
-          width={250}
-          height={250}
-          style={{ objectFit: 'cover', borderRadius: '16px'}}
+          fill
         />
+        <h3>
+            <Link
+              href={'../'+ title}>
+                {title}
+            </Link>
+        </h3>
       </div>
-      <div className={styles.details}>
-          <Link
-            href={'../'+ title}>
-              {title}
-          </Link>
-        </div>
     </div>
   );
 };

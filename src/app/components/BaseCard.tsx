@@ -77,13 +77,14 @@ const BaseCard = ({ imageDir, title, delay }: BaseCardProps) => {
       
         </motion.div>
       </AnimatePresence>
-    </div>
-      <div className={styles.details}>
-        <Link
-          href={'../'+title}
-        > 
-        {title}
-        </Link>
+
+        <h3>
+          <Link
+            href={'../'+title}
+          > 
+          {title}
+          </Link>
+        </h3>
       </div>
   </div>
   );
@@ -91,3 +92,4 @@ const BaseCard = ({ imageDir, title, delay }: BaseCardProps) => {
 
 export default BaseCard;
 
+//TODO: note tag rendering inside md to html to css.

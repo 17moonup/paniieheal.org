@@ -32,7 +32,6 @@
 
 .header a {
   color: transparent;
-  background-image: linear-gradient(90deg, #D95F59, #8C3061, #522258);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -52,7 +51,7 @@
 
 .main {
   width: 90%;
-  margin-top: 6rem;
+  margin-top: 5rem;
 }
 
 .cards {
@@ -62,47 +61,64 @@
   justify-items: center;
   grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr)); 
   grid-template-rows: repeat(2, 1fr);
-  column-gap: 3px; 
-  row-gap: 27px;
+  column-gap: 30px; 
+  row-gap: 50px;
 }
 
 .imageContainer {
-  width: 250px;
-  height: 250px;
+  width: 270px;
+  height: 300px;
   position: relative;
 }
 
 .imageContainer img {
   object-fit: cover;  /* 控制图片填充方式 */
   width: 100%;  /* 覆盖 Next.js 的内联样式 */
-  border-radius: 16px;
+  height: 100%;
+  border-radius: 25px;
 }
-
 
 .card {
   display: flex;
   background-color: var(--background);
+  border: 1px solid gainsboro;
+  border-radius: 25px;
   flex-direction: column;
   overflow: visible;
   height: auto;
-  padding: 3% 5%;
+  margin: 3% 5%;
+  filter: drop-shadow(0px 10px 15px rgba(84, 82, 82, 0.5));
 }
 
-.details {
-  font-size: 1.25rem;
-  margin-top: 1rem;
-  border-radius: 2px;
+.card h3 {
+  position: relative;
+  margin-top: 270px;
+  background-color: rgba(255,255,255, 0.15);
+  backdrop-filter: blur(10px);
+  font-size: 16pt;
+  font-weight: 400;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
   text-align: center;
 }
 
-.details a {
+.card h3 a {
   text-transform: capitalize;
-  color: var(--global-text);
-}
-
-.details:hover {
-  scale: 110%;
-  transition-duration: 1s;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(
+    -45deg,
+    #fdfffe 0%,      
+    #9cccec 40%,    
+    #92aaed 60%,       
+    hsl(282, 37%, 89%) 80%,       
+    #d3b5f1 90%,       
+    #ecfaff 100%       /* 實現無縫循環 */
+  );
+  background-size: 200% 100%; 
+  animation: flow 7s linear infinite; 
 }
 
 .projects {
