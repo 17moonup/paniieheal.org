@@ -81,7 +81,7 @@
 .card {
   display: flex;
   background-color: var(--background);
-  border: 1px solid gainsboro;
+  border: 1px solid rgba(126, 108, 130, 0.499);
   border-radius: 25px;
   flex-direction: column;
   overflow: visible;
