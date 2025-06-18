@@ -1,6 +1,6 @@
 ---
 title: "局外人（L'Étranger）"
-author: '——阿爾貝·加謬（Albert Camus）'
+author: '阿爾貝·加謬（Albert Camus）'
 date: '2024/07/26'
 isbn: '978-7-5327-6176-0'
 imageDir: '/img/book/covers/book1_1.jpg'

@@ -6,16 +6,9 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 // 匯入自訂文章樣式表
 import '../../ui/prose.css';
-import { remark } from 'remark';
 
 // 確保只有在建置時定義的路徑是有效的
 export const dynamicParams = false;
-
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
 
 // 在建置時生成所有靜態路徑
 export async function generateStaticParams() {
@@ -24,11 +17,11 @@ export async function generateStaticParams() {
 }
 
 // 為每個靜態頁面動態生成元數據 (SEO)
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> 
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata>
 {
   const { slug } =  await params;
   try {
-    const bookData = await getBookData(slug);
+    const bookData = await getBookData(params.slug);
     return {
       title: `${bookData.title} | 圖書介紹`,
       description: `閱讀 ${bookData.author} 的《${bookData.title}》的詳細介紹與筆記。`,
@@ -41,7 +34,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 // 頁面
-export default async function BookPage({ params }: PageProps) {
+export default async function BookPage({ params }: { params: { slug: string } }) {
   const { slug } =  await params;
   
   try {

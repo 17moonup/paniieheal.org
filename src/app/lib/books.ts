@@ -50,8 +50,8 @@ export function getSortedBooksData(): BookMetadata[] {
     } as BookMetadata;
   });
 
-  // 根據日期降序排序
-  return allBooksData.sort((a, b) => (a.date < b.date ? 1 : -1));
+  // 日期升序排序
+  return allBooksData.sort((a, b) => (a.date < b.date ? -1 : 1));
 }
 
 // 獲取所有圖書的 id (slug)，用於 generateStaticParams

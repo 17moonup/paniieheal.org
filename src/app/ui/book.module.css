@@ -5,48 +5,62 @@
   font-size: 10.5pt;
   font-family: "LXGW WenKai TC", cursive;
   line-height: 1.5;
-  background-color: #f3f3f3;
-  writing-mode: vertical-lr;
+  writing-mode: vertical-rl;
   -webkit-writing-mode: vertical-rl;
   -moz-writing-mode: vertical-rl;
+  scroll-behavior: smooth; 
 }
 
 .title {
   position: fixed;
-  z-index: 999;
+  writing-mode: vertical-rl;
+  padding-top: 1rem;
+  font-weight: 400;
+  z-index: 16;
   top: 0;
   right: 0;
   bottom: 0;
-  font-size: 3.2rem;
-  text-shadow: 0.7px 0.1px seagreen;
-  opacity: 0.55;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(7px);
+  will-change: transform;
 }
 
-.title ruby {
+.title a {
+  margin: 2rem auto;
+  text-decoration: none;
+  color: var(--global-text);
+  text-shadow: 0.7px 0.1px seagreen;
+}
+
+.title a ruby {
   font-size: 3rem;
 }
 
-.title rt {
+.title a rt {
   text-orientation: upright;
-  font-size: 37%;
+  font-size: 37%; 
   letter-spacing: 0;
   ruby-align: center;
-  text-align: center; /* chrome */
+  text-align: center; /* Chrome */
+}
+
+.main {
+  writing-mode: vertical-rl;
+  padding-right: 8rem; 
+  margin-top: 2rem;
 }
 
 .details {
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  margin: 2rem 3rem;
+  margin: 3rem;
 }
 
 .summary {
   list-style: none;
   font-size: 2.5rem;
-  cursor: pointer;
 }
 
 .summary::-webkit-details-marker {
-  display: none;
+  display: none; /* 隱藏預設標記 */
 }
 
 .bookList {
@@ -55,25 +69,23 @@
   font-size: 1.65rem;
   list-style: Number;
   list-style-position: outside;
-  color: black;
+  color: var(--global-text);
 }
 
 .bookItem {
   padding: 0;
 }
 
-.bookItem:hover {
-  text-shadow: 0 1px 1px lightskyblue;
-}
-
 .bookLink {
   font-size: 1.65rem;
   text-decoration: none;
   color: purple;
-  display: block; /* 讓整個區域都可點擊 */
 }
 
-/* 修正動畫選擇器，使其從 class 開始 */
+.bookLink:hover {
+  text-decoration: underline;
+}
+
 .details[open] .bookList {
   animation: expand 1s ease-in-out forwards;
 }
@@ -97,7 +109,7 @@
 @counter-style Number {
   system: "numeric";
   symbols: "  壹" "  貳" "  叁" "  肆" "  伍" "  陸" "  柒" "  捌" "  玖" "  拾" "拾壹" "拾貳" "拾叁" "拾肆" "拾伍" "拾陸" "拾柒" "拾捌" "拾玖" "貳十" "貳壹";
-  suffix: "|";  
+  suffix: "｜";  
 }
 
 @media screen and (max-width: 1080px) {
