@@ -1,7 +1,6 @@
 // /app/books/[slug]/page.tsx 
 // Handle the books .html logic
 import Image from 'next/image';
-import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getBookData, getAllBookIds } from '../../lib/books';
 import '../../ui/prose.css';
