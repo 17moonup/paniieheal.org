@@ -1,6 +1,7 @@
 ---
 title: "十問（Brief Answers to The Big Questions）"
 author: ' Stephen Hawking'
+illustrator: '吳'
 date: '2025/2/21'
 isbn: '978-7-5357-9694-3'
 imageDir: ''

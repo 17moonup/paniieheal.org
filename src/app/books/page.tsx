@@ -38,11 +38,11 @@ export default function BookListPage() {
                 {convertToChineseNumerals(parseInt(year))} 
               </summary>
               <ul className={styles.bookList}>
-                {booksByYear[year].map(({ id, title, author }) => (
+                {booksByYear[year].map(({ id, title, author, illustrator }) => (
                   <li key={id} className={styles.bookItem}>
                     <Link href={`/books/${id}`} className={styles.bookLink}>
                       <p className={styles.name}>
-                        {title} —— {author}
+                        {title} —— {author} {illustrator}
                       </p>
                     </Link>
                   </li>

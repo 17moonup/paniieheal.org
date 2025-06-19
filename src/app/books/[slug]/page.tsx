@@ -1,14 +1,17 @@
 // /app/books/[slug]/page.tsx 
 // Handle the books .html logic
-import { getBookData, getAllBookIds } from '../../lib/books';
-import { notFound } from 'next/navigation';
-import type { Metadata } from 'next';
 import Image from 'next/image';
-// 匯入自訂文章樣式表
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { getBookData, getAllBookIds } from '../../lib/books';
 import '../../ui/prose.css';
 
 // 確保只有在建置時定義的路徑是有效的
 export const dynamicParams = false;
+
+interface PageProps {
+  params: { slug: string };
+}
 
 // 在建置時生成所有靜態路徑
 export async function generateStaticParams() {
@@ -17,11 +20,9 @@ export async function generateStaticParams() {
 }
 
 // 為每個靜態頁面動態生成元數據 (SEO)
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata>
-{
-  const { slug } =  await params;
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const bookData = await getBookData(params.slug);
   try {
-    const bookData = await getBookData(params.slug);
     return {
       title: `${bookData.title} | 圖書介紹`,
       description: `閱讀 ${bookData.author} 的《${bookData.title}》的詳細介紹與筆記。`,
@@ -34,29 +35,39 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 // 頁面
-export default async function BookPage({ params }: { params: { slug: string } }) {
-  const { slug } =  await params;
-  
+export default async function BookPage({ params }: PageProps) {
+  const bookData = await getBookData(params.slug);
   try {
-    const bookData = await getBookData(slug);
-    
     return (
       <div className="body">
         <header className="header">
           <h1>{bookData.title}</h1>
+          
           <div className="details">
             <h2>作者: {bookData.author}</h2>
             <Image 
-              className="cover"
-              src={ bookData.imageDir }
+              src={ bookData.imageDir || "/img/not-found.jpeg"}
               alt={ `${bookData.title} cover` }
               height={350}
               width={350}
-            ></Image>
-            <h2>ISBN: {bookData.isbn}</h2>
-            <h2>Record: {bookData.date}</h2>
-            {bookData.genre && <h2>類型：{bookData.genre}</h2>}
-            <h3> {bookData.blockquote} </h3>
+            />
+            <dl className="detailsList}">
+              <dt>作者</dt>
+              <dd>{bookData.author}</dd>
+              
+              <dt>ISBN</dt>
+              <dd>{bookData.isbn}</dd>
+              
+              <dt>紀錄日期</dt>
+              <dd><time dateTime={bookData.date}>{bookData.date}</time></dd>
+              
+              {bookData.genre && (
+                <>
+                  <dt>類型</dt>
+                  <dd>{bookData.genre}</dd>
+                </>
+              )}
+            </dl>
           </div>
         </header>
 

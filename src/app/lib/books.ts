@@ -23,8 +23,10 @@ export interface BookData {
   contentHtml: string;
   title: string;
   author: string;
+  illustrator: string;
   date: string;
   isbn: string;
+  genre: string;
   imageDir: string;
   blockquote: string;
   [key: string]: FrontmatterValue;
