@@ -26,10 +26,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       title: `${bookData.title} | 圖書介紹`,
       description: `閱讀 ${bookData.author} 的《${bookData.title}》的詳細介紹與筆記。`,
     };
-  } catch {
-    return {
-      title: '未找到圖書',
-    };
+  } catch (_error) {
+      notFound();
   }
 }
 
