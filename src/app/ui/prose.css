@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&display=swap');
 
-.body {
+.body-container {
   font-size: 10.5pt;
   font-family: "LXGW WenKai TC", cursive;	
   line-height: 1.57;
@@ -18,7 +18,6 @@ h1, h2, h3, h4 {
 .header h1 {
   width: 100%;
   font-size: 3.5rem;
-  font-weight: 400;
   text-align: center;
   margin-top: 1rem;
   margin-bottom: 2rem;
@@ -31,13 +30,13 @@ h1, h2, h3, h4 {
   writing-mode: vertical-lr;
 }
 
-.header h2 {
+.details h2 {
   margin-left: 2rem;
   margin-right: 2rem;
   max-height: 25rem; 
 }
 
-.header h3 {
+.details h3 {
   writing-mode: vertical-rl;
   justify-content: center;
   max-height: 25rem;

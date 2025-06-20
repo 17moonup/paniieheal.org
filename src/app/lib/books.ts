@@ -1,88 +1,108 @@
-// lib/books.ts
-import fs from 'fs';
+// /lib/books.ts
+import { promises as fs } from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
 
-// Markdown files 
-const booksDirectory = path.join(process.cwd(), '/public/content/books');
+const booksDirectory = path.join(process.cwd(), 'public/content/books');
 
-type FrontmatterValue = string | number | boolean;
-
-export interface BookMetadata {
-  id: string; // 從文件名派生
+interface BookFrontmatter {
   title: string;
   author: string;
+  illustrator?: string;
   date: string;
-  [key: string]: FrontmatterValue; // 允許其他自訂屬性，且類型安全
+  genre?: string;
+  imageDir?: string;
+  isbn?: string;
+  blockquote?: string;
 }
-// 定義單本圖書的完整數據類型 (用於詳情頁)
-export interface BookData {
+
+export interface BookMetadata extends BookFrontmatter {
+  id: string;
+}
+
+export interface BookData extends BookFrontmatter {
   id: string;
   contentHtml: string;
-  title: string;
-  author: string;
-  illustrator: string;
-  date: string;
-  isbn: string;
-  genre: string;
-  imageDir: string;
-  blockquote: string;
-  [key: string]: FrontmatterValue;
 }
 
-// 獲取所有圖書的元數據，並按日期排序
-export function getSortedBooksData(): BookMetadata[] {
-  const fileNames = fs.readdirSync(booksDirectory);
-  const allBooksData = fileNames.map((fileName) => {
-    // 移除 ".md" 副檔名以作為 id (slug)
-    const id = fileName.replace(/\.md$/, '');
+export async function getSortedBooksData(): Promise<BookMetadata[]> {
+  try {
+    const fileNames = await fs.readdir(booksDirectory);
+    
+    const booksPromises = fileNames.map(async (fileName) => {
+      // 忽略非 .md 文件，例如 .DS_Store
+      if (!fileName.endsWith('.md')) {
+          return null;
+      }
+      try {
+        const id = encodeURIComponent(fileName.replace(/\.md$/, ''));
+        const filePath = path.join(booksDirectory, fileName);
+        const fileContents = await fs.readFile(filePath, 'utf8');
+        const { data } = matter(fileContents);
 
-    const fullPath = path.join(booksDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
+        return {
+          id,
+          title: data.title || '未知標題',
+          author: data.author || '未知作者',
+          date: data.date || new Date().toISOString().split('T')[0],
+          ...data,
+        } as BookMetadata;
+      } catch (error) {
+        console.error(`處理檔案 ${fileName} 失敗:`, error);
+        return null; // 如果單一檔案出錯，返回 null
+      }
+    });
 
-    // 使用 gray-matter 解析元數據
-    const matterResult = matter(fileContents);
+    const allBooks = await Promise.all(booksPromises);
 
-    // 強制轉換為我們定義的精確類型
-    return {
-      id,
-      ...matterResult.data,
-    } as BookMetadata;
-  });
-
-  // 日期升序排序
-  return allBooksData.sort((a, b) => (a.date < b.date ? -1 : 1));
+    // 過濾掉處理失敗的檔案並排序
+    return allBooks
+      .filter((book): book is BookMetadata => book !== null)
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  } catch (error) {
+    console.error('讀取圖書目錄失敗:', error);
+    return [];
+  }
 }
 
-// 獲取所有圖書的 id (slug)，用於 generateStaticParams
-export function getAllBookIds() {
-  const fileNames = fs.readdirSync(booksDirectory);
-  return fileNames.map((fileName) => {
-    return {
-      slug: fileName.replace(/\.md$/, ''),
-    };
-  });
+export async function getAllBookIds(): Promise<{ slug: string }[]> {
+  try {
+    const fileNames = await fs.readdir(booksDirectory);
+    // 過濾掉非 .md 文件
+    return fileNames
+      .filter(fileName => fileName.endsWith('.md'))
+      .map((fileName) => ({
+        slug: encodeURIComponent(fileName.replace(/\.md$/, '')),
+      }));
+  } catch (error) {
+    console.error('生成圖書 ID 失敗:', error);
+    return [];
+  }
 }
 
-// 根據 id (slug) 獲取單本圖書的完整內容
 export async function getBookData(slug: string): Promise<BookData> {
-  const fullPath = path.join(booksDirectory, `${slug}.md`);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  const decodedSlug = decodeURIComponent(slug);
+  const filePath = path.join(booksDirectory, `${decodedSlug}.md`);
 
-  const matterResult = matter(fileContents);
+  try {
+    const fileContents = await fs.readFile(filePath, 'utf8');
+    const { data, content } = matter(fileContents);
+    const processedContent = await remark().use(html).process(content);
+    const contentHtml = processedContent.toString();
 
-  // 使用 remark 將 markdown 轉換為 HTML
-  const processedContent = await remark()
-    .use(html)
-    .process(matterResult.content);
-  const contentHtml = processedContent.toString();
-
-  // 返回包含 HTML 內容和元數據的完整物件
-  return {
-    id: slug,
-    contentHtml,
-    ...matterResult.data,
-  } as BookData;
+    return {
+      id: slug,
+      contentHtml,
+      title: data.title || '未知標題',
+      author: data.author || '未知作者',
+      date: data.date || new Date().toISOString().split('T')[0],
+      ...data,
+    } as BookData;
+  } catch (error) {
+    console.error(`獲取圖書數據失敗 (slug: ${slug}):`, error);
+    // 拋出錯誤，讓頁面組件的 try...catch 捕獲
+    throw new Error(`找不到該圖書: ${slug}`);
+  }
 }

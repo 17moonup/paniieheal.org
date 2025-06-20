@@ -1,6 +1,6 @@
 ---
-title: '百年孤獨（Cien años de soledad'
-author: '加西亞·馬爾克斯（Gabriel García Márquez'
+title: '百年孤獨（Cien años de soledad)'
+author: '加西亞·馬爾克斯（Gabriel García Márquez)'
 date: '2024/05/01'
 isbn: '978-7-5442-9117-0'
 imageDir: '/img/book/covers/book1_1.jpg'
