@@ -25,7 +25,7 @@ export default async function BookListPage() {
   return (
     <div className={styles.body}>
       <div className={styles.title}>
-        <Link href="/books">
+        <Link href="#">
           <ruby>冊<rt>ㄘㄜˋ</rt></ruby> <ruby>葉<rt>ㄧㄝˋ</rt></ruby> <ruby>集<rt>ㄐㄧˊ</rt></ruby>
         </Link>
       </div>

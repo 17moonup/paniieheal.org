@@ -112,9 +112,9 @@
   suffix: "｜";  
 }
 
-@media screen and (max-width: 1080px) {
+@media screen and (max-width: 600px) {
   .title ruby {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
   }  
 
   .title {

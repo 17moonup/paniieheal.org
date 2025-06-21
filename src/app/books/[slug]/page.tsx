@@ -42,6 +42,7 @@ export default async function BookPage({ params }: PageProps) {
           <h1>{bookData.title}</h1>
           <div className="details">
             <h2>作者: {bookData.author}</h2>  
+            {bookData.illustrator && <h2>譯者：{bookData.illustrator}</h2>}
             <Image 
               src={bookData.imageDir || "/img/not-found.jpeg"}
               alt={`${bookData.title} cover`}
@@ -52,12 +53,15 @@ export default async function BookPage({ params }: PageProps) {
             <h2>ISBN: {bookData.isbn || "N/A"}</h2>
             <h2>Record: {bookData.date}</h2>
             {bookData.genre && <h2>類型：{bookData.genre}</h2>}
-            <h3> {bookData.blockquote} </h3>
+            <h3> {bookData.blockquote} </h3>  
           </div>
         </header>
         <article className="prose-container">
           <div dangerouslySetInnerHTML={{ __html: bookData.contentHtml }} />
         </article>
+        <script>
+          window.location.hash = 'header';
+        </script>
       </div>
     );
   } catch {

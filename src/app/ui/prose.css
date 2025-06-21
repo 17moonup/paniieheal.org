@@ -37,7 +37,6 @@ h1, h2, h3, h4 {
 }
 
 .details h3 {
-  writing-mode: vertical-rl;
   justify-content: center;
   max-height: 25rem;
   font-size: 1.5rem;
@@ -47,7 +46,7 @@ h1, h2, h3, h4 {
   border-left: 4px solid #ccc;
 }
 
-.header .cover {
+.header img {
   display: inline-flex;  
   justify-items: center;
   margin: auto;
@@ -138,4 +137,37 @@ h1, h2, h3, h4 {
   background-color: #e8e8e8;
   padding: 0.2em 0.4em;
   border-radius: 3px;
+}
+
+@media (max-width: 600px) {
+  .body-container {
+    margin: 1rem auto;
+  }
+  
+  .details {
+    writing-mode: horizontal-tb;
+  }
+
+  .header h1 {
+    font-size: 1.7rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .details h2 {
+    max-height: 200px;
+    font-size: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .details h3 {
+    font-size: 1rem;
+  }
+
+  .details img {
+    justify-items: center;  
+    border-radius: 15px;
+    width: 200px;
+    height: 200px;
+  }
 }
