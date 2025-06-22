@@ -1,5 +1,6 @@
-// /app/books/page.tsx (原 page1.tsx)
+// /app/books/page.tsx
 import Link from 'next/link';
+import Navgation from '../components/Navgation';
 import { getSortedBooksData, BookMetadata } from '../lib/books'; // 假設您已配置 @/ 指向 src 或根目錄
 import styles from '../ui/book.module.css';
 
@@ -23,6 +24,8 @@ export default async function BookListPage() {
   const years = Object.keys(booksByYear).sort((a, b) => a.localeCompare(b));
 
   return (
+  <>
+  <Navgation />
     <div className={styles.body}>
       <div className={styles.title}>
         <Link href="#">
@@ -51,5 +54,6 @@ export default async function BookListPage() {
         ))}
       </div>
     </div>
+  </>
   );
 }

@@ -14,7 +14,7 @@
 .title {
   position: fixed;
   writing-mode: vertical-rl;
-  padding-top: 1rem;
+  padding-top: 3rem;
   font-weight: 400;
   z-index: 16;
   top: 0;
@@ -45,13 +45,13 @@
 }
 
 .main {
-  writing-mode: vertical-rl;
   padding-right: 8rem; 
-  margin-top: 2rem;
+  margin-top: 7rem;
 }
 
 .details {
-  margin: 3rem;
+  margin-top: 4rem;
+  padding-left: 1rem;
 }
 
 .summary {

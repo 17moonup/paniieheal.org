@@ -59,9 +59,6 @@ export default async function BookPage({ params }: PageProps) {
         <article className="prose-container">
           <div dangerouslySetInnerHTML={{ __html: bookData.contentHtml }} />
         </article>
-        <script>
-          window.location.hash = 'header';
-        </script>
       </div>
     );
   } catch {
@@ -71,3 +68,4 @@ export default async function BookPage({ params }: PageProps) {
 //TODO: "1. Book Cover"
 //      "2. Genre Function"
 //      "3. Multiple Records"
+//      "4. AddtoNav"

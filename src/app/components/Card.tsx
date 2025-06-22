@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import styles from '../ui/home.module.css';
 import Link from 'next/link';
+
 interface CardProps {
   title: string;
   src: string;

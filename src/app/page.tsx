@@ -4,6 +4,7 @@ import MusicCard from './components/MusicCard';
 import FilmCard from './components/FilmCard';
 import PhotoCard from './components/PhotoCard';
 import LectureCard from './components/LectureCard';
+import SportCard from './components/SportCard';
 import Image from 'next/image';
 import { Metadata } from 'next';
 import { FaGithub } from 'react-icons/fa';
@@ -29,6 +30,7 @@ export default function Home() {
             <FilmCard delay={15000} />
             <PhotoCard delay={10000} />
             <LectureCard src={"/bg.jpg"} />
+            <SportCard src={"/bg.jpg"} />
         </div>
         <div className={styles.projects}>
           <div className={styles.item}>
