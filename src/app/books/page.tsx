@@ -44,7 +44,7 @@ export default async function BookListPage() {
                   <Link href={`/books/${id}`} className={styles.bookLink}>
                     <p className={styles.name}>
                       {title} —— {author} 
-                      {illustrator && ` / ${illustrator}`}
+                      {illustrator && ` 譯/註: ${illustrator}`}
                     </p>
                   </Link>
                 </li>

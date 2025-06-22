@@ -26,7 +26,7 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.cards}>
             <MusicCard delay={7000} />
-            <BookCard delay={27000} />
+            <BookCard src={"/img/book/cover.jpg"} />
             <FilmCard delay={15000} />
             <PhotoCard delay={10000} />
             <LectureCard src={"/bg.jpg"} />

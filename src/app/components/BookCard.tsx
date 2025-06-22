@@ -1,11 +1,10 @@
-import BaseCard from './BaseCard';
+import Card from "./Card";
 
-const BookCard = ({ delay }: { delay: number }) => {
+const BookCard = ({ src }: { src:string }) => {
   return (
-    <BaseCard
-      imageDir="/img/book/covers"
+    <Card
+      src={src}
       title="books"
-      delay={delay}
     />
   );
 };

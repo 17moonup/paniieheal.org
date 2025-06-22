@@ -3,7 +3,7 @@ title: '百年孤獨（Cien años de soledad)'
 author: '加西亞·馬爾克斯（Gabriel García Márquez)'
 date: '2024/05/01'
 isbn: '978-7-5442-9117-0'
-imageDir: '/img/book/covers/book1_1.jpg'
+imageDir: '/img/book/covers/book3.jpg'
 blockquote: '「多年以後，面對行刑隊，奧雷裡亞諾·布恩迪亞上校將會回想起父親帶他去見識冰塊的那個遙遠的下午。」而我卻再也記不起這是第幾次讀起這句話了⋯⋯'
 ---
 

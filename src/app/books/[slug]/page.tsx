@@ -42,12 +42,12 @@ export default async function BookPage({ params }: PageProps) {
           <h1>{bookData.title}</h1>
           <div className="details">
             <h2>作者: {bookData.author}</h2>  
-            {bookData.illustrator && <h2>譯者：{bookData.illustrator}</h2>}
+            {bookData.illustrator && <h2>譯註: {bookData.illustrator}</h2>}
             <Image 
               src={bookData.imageDir || "/img/not-found.jpeg"}
               alt={`${bookData.title} cover`}
-              height={350}
-              width={350}
+              height={285}
+              width={210}
               priority
             />
             <h2>ISBN: {bookData.isbn || "N/A"}</h2>
@@ -68,4 +68,3 @@ export default async function BookPage({ params }: PageProps) {
 //TODO: "1. Book Cover"
 //      "2. Genre Function"
 //      "3. Multiple Records"
-//      "4. AddtoNav"
