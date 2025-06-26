@@ -1,22 +1,45 @@
-import NextAuth from "next-auth";
-import Apple from "next-auth/providers/apple";
-import GitHub from "next-auth/providers/github";
-import Google from "next-auth/providers/google";
-import Twitter from "next-auth/providers/twitter";
-export const { auth, handlers, signIn, signOut } = NextAuth({
+import NextAuth from "next-auth"
+import Google from "next-auth/providers/google"
+
+console.log('GOOGLE_CLIENT_ID:', process.env.GOOGLE_CLIENT_ID ? 'Set' : 'Not set')
+console.log('GOOGLE_CLIENT_SECRET:', process.env.GOOGLE_CLIENT_SECRET ? 'Set' : 'Not set')
+console.log('NEXTAUTH_URL:', process.env.NEXTAUTH_URL)
+export const { handlers, signIn, signOut, auth } = NextAuth({
+  debug: process.env.NODE_ENV === "development", // 开启调试模式
   providers: [
-    Google,
-    GitHub({
-      profile(profile) {
-        return {
-          id: profile.id.toString(),
-          name: profile.name || profile.login,
-          email: profile.email,
-          image: profile.avatar_url,
-        };
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          scope: "openid email profile https://www.googleapis.com/auth/calendar",
+        },
       },
     }),
-    Apple,
-    Twitter,
   ],
-});
+  callbacks: {
+    async jwt({ token, account }) {
+      if (account) {
+        token.accessToken = account.access_token
+      }
+      return token
+    },
+    async session({ session, token }) {
+      session.accessToken = token.accessToken as string
+      return session
+    },
+  },
+  // 添加错误处理
+  events: {
+    async signIn(message) {
+      console.log("Sign in event:", message)
+    },
+    async signOut(message) {
+      console.log("Sign out event:", message)
+    },
+  },
+  // 自定义页面（可选）
+  pages: {
+    error: '/auth/error',
+  },
+})
