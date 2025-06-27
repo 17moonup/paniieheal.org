@@ -5,7 +5,6 @@ console.log('GOOGLE_CLIENT_ID:', process.env.GOOGLE_CLIENT_ID ? 'Set' : 'Not set
 console.log('GOOGLE_CLIENT_SECRET:', process.env.GOOGLE_CLIENT_SECRET ? 'Set' : 'Not set')
 console.log('NEXTAUTH_URL:', process.env.NEXTAUTH_URL)
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  debug: process.env.NODE_ENV === "development", // 开启调试模式
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,

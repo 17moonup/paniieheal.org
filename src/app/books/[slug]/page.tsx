@@ -3,7 +3,7 @@ import Image from 'next/image';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getBookData, getAllBookIds } from '../../lib/books';
-import '@/app/ui/prose.css';
+import '@/ui/prose.css';
 
 export const dynamicParams = false;
 

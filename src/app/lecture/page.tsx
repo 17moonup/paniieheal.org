@@ -1,6 +1,7 @@
-import { auth } from "@/app/auth"
-import { signIn, signOut } from "@/app/auth"
+import { auth } from "@/auth"
+import { signIn, signOut } from "@/auth"
 import Link from "next/link"
+import Image from "next/image"
 
 export default async function HomePage() {
   const session = await auth()
@@ -15,7 +16,7 @@ export default async function HomePage() {
             <div className="text-center">
               <div className="mb-4">
                 {session.user?.image && (
-                  <img 
+                  <Image 
                     src={session.user.image} 
                     alt="Profile" 
                     className="w-16 h-16 rounded-full mx-auto mb-2"

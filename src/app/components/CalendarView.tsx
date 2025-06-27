@@ -1,6 +1,6 @@
 "use client"
 
-import { CalendarEvent } from "@/app/lib/google-calendar"
+import { CalendarEvent } from "@/lib/google-calendar"
 
 interface CalendarViewProps {
   events: CalendarEvent[]

@@ -2,7 +2,7 @@ import styles from './ui/home.module.css';
 import BookCard from './components/BookCard';
 import MusicCard from './components/MusicCard';
 import FilmCard from './components/FilmCard';
-import PhotoCard from './components/PhotoCard';
+import PhotoCard from './components/p';
 import LectureCard from './components/LectureCard';
 import SportCard from './components/SportCard';
 import Image from 'next/image';

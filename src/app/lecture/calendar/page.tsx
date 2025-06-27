@@ -1,4 +1,4 @@
-import { auth } from "@/app/auth"
+import { auth } from "@/auth"
 import { CalendarEvent, getCalendarEvents } from "../../lib/google-calendar"
 import { redirect } from "next/navigation"
 import CalendarView from "../../components/CalendarView"

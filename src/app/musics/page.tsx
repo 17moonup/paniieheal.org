@@ -1,5 +1,5 @@
-import Navgation from "@/app/components/Navgation";
-import ScrollingImage from "@/app/components/ScrollingImage";
+import Navgation from "@/components/Navgation";
+import ScrollingImage from "@/components/ScrollingImage";
 import styles from '../ui/music.module.css';
 import { Metadata } from 'next';
 

@@ -1,4 +1,4 @@
-import { auth } from "@/app/auth";
+import { auth } from "@/auth";
 import Image from "next/image";
 import styles from '../ui/lecture.module.css';
 
