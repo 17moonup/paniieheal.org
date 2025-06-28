@@ -14,13 +14,9 @@
 .title {
   position: fixed;
   writing-mode: vertical-rl;
-  border: 1px solid rgba(255, 255, 255, 0.15) ;
-  border-radius: 30px;
-  margin-right: 0.5rem;
-  margin-bottom: 2rem;
-  margin-top: 4rem;
-  font-weight: 400;
-  z-index: 10;
+  padding-top: 3rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  z-index: 16;
   top: 0;
   right: 0;
   bottom: 0;
@@ -33,7 +29,7 @@
   margin: 2rem auto;
   text-decoration: none;
   color: var(--global-text);
-  text-shadow: 2px 1px seagreen;
+  text-shadow: 0.6px 0.1px seagreen;
 }
 
 .title a ruby {

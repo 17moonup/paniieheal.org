@@ -10,7 +10,7 @@ const links = [
   { name: 'Books', href: '/books' },
   { name: 'Films', href: '/films' },
   { name: 'Musics', href: '/musics' },
-  { name: 'P_Portfolio', href: '/portfolio' },
+  { name: 'P_Portfolio', href: '/photos' },
 ];
 
 export default function Navgation() {

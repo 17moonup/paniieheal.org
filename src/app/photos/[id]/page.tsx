@@ -19,7 +19,10 @@ export default async function PhotoDetailPage({ params }: PageProps) {
   }
   
   return (
-    <div className="photo-detail-container">
+    <div className="photo-detail-container"
+        style={{
+          backgroundImage: `url(${photo.url})`,
+        }}>
       <Link href="/photos" className="back-link">
         <span className="back-arrow">←</span>
         返回照片列表

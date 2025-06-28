@@ -1,10 +1,19 @@
 // lib/photo-utils.ts - 数据库操作工具
 import { createPool } from '@vercel/postgres';
 
-// Initialize the connection pool
-const pool = createPool({
-  connectionString: process.env.POSTGRES_URL,
-});
+let pool: ReturnType<typeof createPool> | null = null;
+
+// 延迟初始化连接池
+function getPool() {
+  if (!pool) {
+    const connectionString = process.env.POSTGRES_URL;
+    if (!connectionString) {
+      throw new Error('POSTGRES_URL environment variable is not set');
+    }
+    pool = createPool({ connectionString });
+  }
+  return pool;
+}
 
 export interface Photo {
   id: string
@@ -28,7 +37,7 @@ export interface Photo {
 // 从数据库获取照片列表
 export async function getPhotos(): Promise<Photo[]> {
   try {
-    const { rows } = await pool.sql`
+    const { rows } = await getPool().sql`
       SELECT 
         id, title, filename, url, thumbnail, taken_at,
         camera, lens, aperture, shutter_speed, iso, focal_length,
@@ -64,7 +73,7 @@ export async function getPhotos(): Promise<Photo[]> {
 // 根据ID获取单张照片
 export async function getPhotoById(id: string): Promise<Photo | null> {
   try {
-    const { rows } = await pool.sql`
+    const { rows } = await getPool().sql`
       SELECT 
         id, title, filename, url, thumbnail, taken_at,
         camera, lens, aperture, shutter_speed, iso, focal_length,
@@ -106,7 +115,7 @@ export async function addPhoto(photo: Omit<Photo, 'id'>): Promise<string> {
   const id = crypto.randomUUID()
   
   try {
-    await pool.sql`
+    await getPool().sql`
       INSERT INTO photos (
         id, title, filename, url, thumbnail, taken_at, camera, lens,
         aperture, shutter_speed, iso, focal_length, location, description
@@ -123,5 +132,47 @@ export async function addPhoto(photo: Omit<Photo, 'id'>): Promise<string> {
   } catch (error) {
     console.error('添加照片失败:', error)
     throw error
+  }
+}
+
+// 删除单张照片
+export async function deletePhoto(id: string): Promise<boolean> {
+  try {
+    const { rowCount } = await getPool().sql`
+      DELETE FROM photos WHERE id = ${id}
+    `
+    return rowCount !== null && rowCount > 0; // 添加检查
+  } catch (error) {
+    console.error('删除照片失败:', error)
+    return false
+  }
+}
+
+// 删除所有照片
+export async function deleteAllPhotos(): Promise<boolean> {
+  try {
+    const { rowCount } = await getPool().sql`
+      DELETE FROM photos
+    `
+    
+    console.log(`已删除 ${rowCount} 张照片`)
+    return true
+  } catch (error) {
+    console.error('删除所有照片失败:', error)
+    return false
+  }
+}
+
+// 获取照片总数
+export async function getPhotosCount(): Promise<number> {
+  try {
+    const { rows } = await getPool().sql`
+      SELECT COUNT(*) as count FROM photos
+    `
+    
+    return parseInt(rows[0].count)
+  } catch (error) {
+    console.error('获取照片数量失败:', error)
+    return 0
   }
 }

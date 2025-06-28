@@ -1,11 +1,11 @@
 // scripts/process-photos.ts - TypeScript版本（使用tsx运行）
+import dotenv from 'dotenv';
+dotenv.config(); // 最先加载环境变量
 import { promises as fs } from 'fs'
 import path from 'path'
 import sharp from 'sharp'
 import { extractExifData } from '../lib/exif.js'
 import { addPhoto } from '../lib/photo-utils.js'
-import dotenv from 'dotenv';
-dotenv.config();
 
 async function processPhotosTS() {
   const photosDir = path.join(process.cwd(), 'public', 'photos', 'original')
@@ -95,6 +95,7 @@ async function processPhotosTS() {
 
 // 运行脚本
 if (import.meta.url === `file://${process.argv[1]}`) {
+  console.log('DB URL:', process.env.POSTGRES_URL); // Should show your connection string
   processPhotosTS().catch(console.error)
 }
 

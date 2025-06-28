@@ -2,19 +2,18 @@
 import { Suspense } from 'react'
 import PhotoGrid from '../components/PhotoGrid'
 import '@/ui/photo.css'
+import Navgation from '@/components/Navgation'
 
 export default async function PhotosPage() {
   return (
+    <>
+    <Navgation />
     <div className="photos-container">
-      <div className="photos-header">
-        <h1 className="photos-title">摄影作品</h1>
-        <p className="photos-subtitle">记录生活中的美好瞬间</p>
-      </div>
-      
       <Suspense fallback={<PhotoGridSkeleton />}>
         <PhotoGrid />
       </Suspense>
     </div>
+    </>
   )
 }
 
