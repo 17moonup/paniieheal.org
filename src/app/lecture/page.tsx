@@ -49,7 +49,7 @@ export default async function HomePage() {
               <p className="signin-text">Please sign in to access your Google Calendar</p>
               <form action={async () => {
                 "use server"
-                await signIn("google", { redirectTo: "/" })
+                await signIn("google", { redirectTo: "/lecture/calendar" })
               }}>
                 <button type="submit" className="btn btn-google">
                   Sign in with Google
