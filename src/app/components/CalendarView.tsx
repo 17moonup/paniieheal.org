@@ -1,5 +1,6 @@
+'use client'
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 // 使用你现有的 CalendarEvent 接口
 interface CalendarEvent {
