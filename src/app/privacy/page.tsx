@@ -305,7 +305,7 @@ export default function Privacy() {
           <li>HTTPS encryption for all data transmission</li>
           <li>Secure storage of authentication tokens</li>
           <li>Regular security audits and updates</li>
-          <li>Compliance with Google's security requirements</li>
+          <li>Compliance with Google security requirements</li>
           <li>Limited access to personal data on a need-to-know basis</li>
         </ul>
       </section>

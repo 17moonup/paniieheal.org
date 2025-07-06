@@ -43,7 +43,7 @@ export default function Terms() {
           1. Acceptance of Terms
         </h2>
         <p>
-          By using <strong>Paniieheal Truth Store</strong> (the "Site"), you agree to these Terms of Use ("Terms") and our{' '}
+          By using <strong>Paniieheal Truth Store</strong> (the Site), you agree to these Terms of Use (Terms) and our{' '}
           <Link href="/privacy-policy" style={{
             color: '#2563eb',
             textDecoration: 'none'
@@ -67,7 +67,7 @@ export default function Terms() {
           <strong>Login Method:</strong> You may sign up via Google OAuth only.
         </p>
         <p style={{ marginBottom: '16px' }}>
-          By using Google OAuth to access our service, you must comply with Google's terms of service:
+          By using Google OAuth to access our service, you must comply with Google terms of service:
         </p>
         <ul style={{
           listStyle: 'disc',
@@ -121,7 +121,7 @@ export default function Terms() {
           marginBottom: '16px'
         }}>
           <li>Access your basic Google profile information (name, email, profile picture)</li>
-          <li>Verify your identity through Google's authentication system</li>
+          <li>Verify your identity through Google authentication system</li>
           <li>Create and maintain your account on our platform</li>
         </ul>
         <p>
@@ -161,7 +161,7 @@ export default function Terms() {
           5. Account Termination
         </h2>
         <p>
-          We may suspend or terminate accounts that violate these Terms or Google's policies. 
+          We may suspend or terminate accounts that violate these Terms or Google policies. 
           You may also revoke access to your Google account at any time through your Google Account settings.
         </p>
       </section>
@@ -181,7 +181,7 @@ export default function Terms() {
           paddingLeft: '24px'
         }}>
           <li>Google OAuth service outages or authentication failures</li>
-          <li>Changes to Google's authentication policies</li>
+          <li>Changes to Google authentication policies</li>
           <li>Issues arising from your Google account settings or restrictions</li>
           <li>User-generated content</li>
         </ul>
