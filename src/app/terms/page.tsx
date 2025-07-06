@@ -8,85 +8,219 @@ export const metadata: Metadata = {
 
 export default function Terms() {
   return (
-    <div className="legal-document max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Terms of Use – Paniieheal Truth Store</h1>
-      <p className="text-sm text-gray-500 mb-8">Last Updated: {new Date().toLocaleDateString()}</p>
+    <div style={{
+      maxWidth: '800px',
+      margin: '0 auto',
+      padding: '24px',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      lineHeight: '1.6',
+      color: '#333'
+    }}>
+      <h1 style={{
+        fontSize: '2rem',
+        fontWeight: 'bold',
+        marginBottom: '24px',
+        color: '#1a1a1a'
+      }}>
+        Terms of Use – Paniieheal Truth Store
+      </h1>
+      
+      <p style={{
+        fontSize: '0.875rem',
+        color: '#666',
+        marginBottom: '32px'
+      }}>
+        Last Updated: {new Date().toLocaleDateString()}
+      </p>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">1. Acceptance of Terms</h2>
+      <section style={{ marginBottom: '32px' }}>
+        <h2 style={{
+          fontSize: '1.5rem',
+          fontWeight: '600',
+          marginBottom: '16px',
+          color: '#1a1a1a'
+        }}>
+          1. Acceptance of Terms
+        </h2>
         <p>
-          By using <strong>Paniieheal Truth Store</strong> (the &quot;Site&quot;), you agree to these Terms of Use (&quot;Terms&quot;) and our{' '}
-          <Link href="/privacy-policy" className="text-blue-600 hover:underline">
+          By using <strong>Paniieheal Truth Store</strong> (the "Site"), you agree to these Terms of Use ("Terms") and our{' '}
+          <Link href="/privacy-policy" style={{
+            color: '#2563eb',
+            textDecoration: 'none'
+          }}>
             Privacy Policy
           </Link>
           . If you disagree, do not use the Site.
         </p>
       </section>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">2. Account Registration</h2>
-        <p className="mb-4">
-          <strong>Login Methods:</strong> You may sign up via:
+      <section style={{ marginBottom: '32px' }}>
+        <h2 style={{
+          fontSize: '1.5rem',
+          fontWeight: '600',
+          marginBottom: '16px',
+          color: '#1a1a1a'
+        }}>
+          2. Account Registration
+        </h2>
+        <p style={{ marginBottom: '16px' }}>
+          <strong>Login Method:</strong> You may sign up via Google OAuth only.
         </p>
-        <ul className="list-disc pl-6 mb-4">
-          <li>Google</li>
-          <li>GitHub</li>
-          <li>Twitter (X)</li>
-          <li>Apple</li>
-        </ul>
-        <p>You must comply with each platform&apos;s terms:</p>
-        <ul className="list-disc pl-6 mb-4">
+        <p style={{ marginBottom: '16px' }}>
+          By using Google OAuth to access our service, you must comply with Google's terms of service:
+        </p>
+        <ul style={{
+          listStyle: 'disc',
+          paddingLeft: '24px',
+          marginBottom: '16px'
+        }}>
           <li>
-            <a href="https://developers.google.com/terms" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-              Google API Terms
+            <a 
+              href="https://developers.google.com/terms" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{
+                color: '#2563eb',
+                textDecoration: 'none'
+              }}
+            >
+              Google API Terms of Service
             </a>
           </li>
           <li>
-            <a href="https://docs.github.com/en/site-policy" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-              GitHub Terms
-            </a>
-          </li>
-          <li>
-            <a href="https://developer.twitter.com/en/developer-terms/agreement" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-              Twitter Developer Agreement
-            </a>
-          </li>
-          <li>
-            <a href="https://developer.apple.com/terms/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-              Apple Terms
+            <a 
+              href="https://policies.google.com/terms" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{
+                color: '#2563eb',
+                textDecoration: 'none'
+              }}
+            >
+              Google Terms of Service
             </a>
           </li>
         </ul>
       </section>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">3. Prohibited Conduct</h2>
-        <p>You may not:</p>
-        <ul className="list-disc pl-6">
+      <section style={{ marginBottom: '32px' }}>
+        <h2 style={{
+          fontSize: '1.5rem',
+          fontWeight: '600',
+          marginBottom: '16px',
+          color: '#1a1a1a'
+        }}>
+          3. Google OAuth Integration
+        </h2>
+        <p style={{ marginBottom: '16px' }}>
+          Our service uses Google OAuth for authentication. By logging in with Google, you authorize us to:
+        </p>
+        <ul style={{
+          listStyle: 'disc',
+          paddingLeft: '24px',
+          marginBottom: '16px'
+        }}>
+          <li>Access your basic Google profile information (name, email, profile picture)</li>
+          <li>Verify your identity through Google's authentication system</li>
+          <li>Create and maintain your account on our platform</li>
+        </ul>
+        <p>
+          We do not access any other Google services or data beyond what is necessary for authentication.
+        </p>
+      </section>
+
+      <section style={{ marginBottom: '32px' }}>
+        <h2 style={{
+          fontSize: '1.5rem',
+          fontWeight: '600',
+          marginBottom: '16px',
+          color: '#1a1a1a'
+        }}>
+          4. Prohibited Conduct
+        </h2>
+        <p style={{ marginBottom: '16px' }}>You may not:</p>
+        <ul style={{
+          listStyle: 'disc',
+          paddingLeft: '24px'
+        }}>
           <li>Use the Site for illegal activities</li>
           <li>Impersonate others or create fake accounts</li>
-          <li>Bypass API rate limits or misuse login integrations</li>
+          <li>Bypass Google OAuth security measures</li>
+          <li>Attempt to access accounts that do not belong to you</li>
+          <li>Abuse or misuse the Google login integration</li>
         </ul>
       </section>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">4. Termination</h2>
-        <p>We may suspend accounts violating these Terms or third-party policies.</p>
+      <section style={{ marginBottom: '32px' }}>
+        <h2 style={{
+          fontSize: '1.5rem',
+          fontWeight: '600',
+          marginBottom: '16px',
+          color: '#1a1a1a'
+        }}>
+          5. Account Termination
+        </h2>
+        <p>
+          We may suspend or terminate accounts that violate these Terms or Google's policies. 
+          You may also revoke access to your Google account at any time through your Google Account settings.
+        </p>
       </section>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">5. Limitation of Liability</h2>
-        <p>We are not responsible for:</p>
-        <ul className="list-disc pl-6">
-          <li>Third-party API outages (e.g., Twitter/Google login failures)</li>
+      <section style={{ marginBottom: '32px' }}>
+        <h2 style={{
+          fontSize: '1.5rem',
+          fontWeight: '600',
+          marginBottom: '16px',
+          color: '#1a1a1a'
+        }}>
+          6. Limitation of Liability
+        </h2>
+        <p style={{ marginBottom: '16px' }}>We are not responsible for:</p>
+        <ul style={{
+          listStyle: 'disc',
+          paddingLeft: '24px'
+        }}>
+          <li>Google OAuth service outages or authentication failures</li>
+          <li>Changes to Google's authentication policies</li>
+          <li>Issues arising from your Google account settings or restrictions</li>
           <li>User-generated content</li>
         </ul>
       </section>
 
-      <div className="mt-8 pt-4 border-t border-gray-200">
+      <section style={{ marginBottom: '32px' }}>
+        <h2 style={{
+          fontSize: '1.5rem',
+          fontWeight: '600',
+          marginBottom: '16px',
+          color: '#1a1a1a'
+        }}>
+          7. Contact Information
+        </h2>
+        <p>
+          For questions about these Terms, please contact us at:{' '}
+          <a 
+            href="mailto:support@paniieheal.org"
+            style={{
+              color: '#2563eb',
+              textDecoration: 'none'
+            }}
+          >
+            support@paniieheal.org
+          </a>
+        </p>
+      </section>
+
+      <div style={{
+        marginTop: '32px',
+        paddingTop: '16px',
+        borderTop: '1px solid #e5e7eb'
+      }}>
         <p>
           <strong>Full Terms:</strong>{' '}
-          <Link href="/full-terms" className="text-blue-600 hover:underline">
+          <Link href="/full-terms" style={{
+            color: '#2563eb',
+            textDecoration: 'none'
+          }}>
             Link to extended document
           </Link>
         </p>

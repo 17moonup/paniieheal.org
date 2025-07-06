@@ -11,7 +11,7 @@ export default async function HomePage() {
     <div className="page-container">
       <div className="main-container">
         <div className="auth-card">
-          <h1 className="main-title">Google Calendar App</h1>
+          <h1 className="main-title">Paniieheal Schedule from Google</h1>
           
           {session ? (
             <div className="user-section">

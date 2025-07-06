@@ -9,9 +9,9 @@ export default function Home(){
     <div>
   <Navgation />
 <div className={styles.scrollContainer}>
-  <div className={styles.scrollItem}>第一页</div>
-  <div className={styles.scrollItem}>第二页</div>
-  <div className={styles.scrollItem}>第三页</div>
+  <div className={styles.scrollItem}>Coming Soon...</div>
+  <div className={styles.scrollItem}>...</div>
+  <div className={styles.scrollItem}>...</div>
 </div>
 </div>
   )}
