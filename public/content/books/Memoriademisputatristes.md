@@ -1,5 +1,4 @@
 ---
-​---
 title: "苦妓回憶錄（Memoria de mis puta tristes）"
 author: '加西亞·馬爾克斯（Gabriel García Márquez)'
 illustrator: "軒樂"
@@ -8,7 +7,7 @@ isbn: '978-7-5442-9328-0'
 imageDir: '/img/book/covers/book27.jpg'
 blockquote: '「老人們在無足輕重的事上失去了記憶，但對真正感興趣的事卻很少迷糊。」'
 ​---
----
+
 
 ### 加氏宿命
 
