@@ -1,9 +1,9 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckCircle, Circle, Calendar, Clock } from 'lucide-react';
 
-// 使用你现有的 CalendarEvent 接口
+// 扩展的事件接口，包含任务信息
 interface CalendarEvent {
   id: string;
   summary: string;
@@ -25,6 +25,16 @@ interface CalendarEvent {
     email?: string | null;
     displayName?: string | null;
   } | null;
+  // 标识事件类型
+  eventType: 'calendar' | 'task';
+  // 任务特有属性
+  taskList?: string;
+  completed?: boolean;
+  due?: string;
+  notes?: string;
+  parent?: string;
+  position?: string;
+  updated?: string;
 }
 
 interface MonthCalendarViewProps {
@@ -35,8 +45,10 @@ interface MonthCalendarViewProps {
 export default function MonthCalendarView({ events = [], onDateRangeChange }: MonthCalendarViewProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
+  const [showTasksOnly, setShowTasksOnly] = useState(false);
+  const [showEventsOnly, setShowEventsOnly] = useState(false);
 
-  // CSS样式保持不变
+  // CSS样式
   const styles = `
     .calendar-container {
       background: white;
@@ -56,6 +68,7 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
       display: flex;
       align-items: center;
       justify-content: space-between;
+      margin-bottom: 12px;
     }
 
     .calendar-nav-left {
@@ -96,6 +109,35 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
 
     .today-button:hover {
       background: #1d4ed8;
+    }
+
+    .filter-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-button {
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .filter-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .filter-button.active {
+      background: white;
+      color: #2563eb;
     }
 
     .weekdays-header {
@@ -172,21 +214,24 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
     .events-container {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 2px;
     }
 
-    .event-item {
-      font-size: 12px;
-      padding: 4px;
+    .event-item, .task-item {
+      font-size: 11px;
+      padding: 3px 6px;
       border-radius: 4px;
       cursor: pointer;
       transition: opacity 0.2s;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .event-item:hover {
+    .event-item:hover, .task-item:hover {
       opacity: 0.8;
     }
 
@@ -221,15 +266,45 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
       color: white;
     }
 
-    .event-work::before {
-      content: "💼 ";
+    .task-pending {
+      background: #f59e0b;
+      color: white;
+      border-left: 3px solid #d97706;
+    }
+
+    .task-completed {
+      background: #10b981;
+      color: white;
+      border-left: 3px solid #059669;
+      text-decoration: line-through;
+      opacity: 0.8;
+    }
+
+    .task-overdue {
+      background: #ef4444;
+      color: white;
+      border-left: 3px solid #dc2626;
+    }
+
+    .task-icon {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+
+    .event-icon {
+      width: 10px;
+      height: 10px;
+      flex-shrink: 0;
     }
 
     .more-events {
-      font-size: 12px;
+      font-size: 10px;
       color: #6b7280;
       cursor: pointer;
       transition: color 0.2s;
+      padding: 2px 4px;
+      text-align: center;
     }
 
     .more-events:hover {
@@ -253,7 +328,7 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
       background: white;
       border-radius: 8px;
       padding: 24px;
-      max-width: 400px;
+      max-width: 500px;
       width: 90%;
       max-height: 80vh;
       overflow-y: auto;
@@ -270,6 +345,9 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
       font-size: 18px;
       font-weight: 600;
       margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .modal-close {
@@ -288,19 +366,21 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
     .modal-details {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 12px;
       font-size: 14px;
     }
 
     .modal-details strong {
       font-weight: 600;
+      color: #374151;
     }
 
-    .modal-description {
+    .modal-description, .modal-notes {
       margin-top: 4px;
-      padding: 8px;
+      padding: 12px;
       background: #f9fafb;
-      border-radius: 4px;
+      border-radius: 6px;
+      border-left: 4px solid #e5e7eb;
     }
 
     .modal-link {
@@ -316,11 +396,11 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
       color: #1d4ed8;
     }
 
-    .event-status {
+    .event-status, .task-status {
       display: inline-block;
-      padding: 2px 6px;
+      padding: 4px 8px;
       border-radius: 12px;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 500;
       margin-left: 8px;
     }
@@ -338,6 +418,51 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
     .status-upcoming {
       background: #dbeafe;
       color: #2563eb;
+    }
+
+    .status-completed {
+      background: #dcfce7;
+      color: #16a34a;
+    }
+
+    .status-pending {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .status-overdue {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .task-list-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      background: #e5e7eb;
+      color: #374151;
+      border-radius: 8px;
+      font-size: 10px;
+      margin-left: 4px;
+    }
+
+    .task-type-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      background: #f59e0b;
+      color: white;
+      border-radius: 8px;
+      font-size: 10px;
+      margin-left: 4px;
+    }
+
+    .event-type-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      background: #3b82f6;
+      color: white;
+      border-radius: 8px;
+      font-size: 10px;
+      margin-left: 4px;
     }
   `;
 
@@ -359,7 +484,6 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
       const rangeStart = new Date(startDate);
       const rangeEnd = new Date(endDate);
       
-      // 格式化为 ISO 字符串
       onDateRangeChange(
         rangeStart.toISOString().split('T')[0] + 'T00:00:00Z',
         rangeEnd.toISOString().split('T')[0] + 'T23:59:59Z'
@@ -376,49 +500,76 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
     currentCalendarDate.setDate(currentCalendarDate.getDate() + 1);
   }
 
-  // 检查事件是否为工作相关
-  const isWorkEvent = (event: CalendarEvent): boolean => {
-    const workKeywords = ['会议', '工作', '项目', '开发', '测试', '部署', '需求', '评审', 'meeting', 'work', 'project', 'dev', 'development'];
-    const summary = (event.summary || '').toLowerCase();
-    const description = (event.description || '').toLowerCase();
+  // 过滤事件
+  const getFilteredEvents = () => {
+    if (showTasksOnly) {
+      return events.filter(event => event.eventType === 'task');
+    }
+    if (showEventsOnly) {
+      return events.filter(event => event.eventType === 'calendar');
+    }
+    return events;
+  };
+
+  // 检查是否为工作相关事件/任务
+  const isWorkRelated = (item: CalendarEvent): boolean => {
+    const workKeywords = ['会议', '工作', '项目', '开发', '测试', '部署', '需求', '评审', 'meeting', 'work', 'project', 'dev', 'development', '任务', 'task'];
+    const summary = (item.summary || '').toLowerCase();
+    const description = (item.description || item.notes || '').toLowerCase();
     
     return workKeywords.some(keyword => 
       summary.includes(keyword) || description.includes(keyword)
     );
   };
 
-  // 获取指定日期的事件
-  const getEventsForDate = (date: Date) => {
+  // 获取指定日期的事件和任务
+  const getItemsForDate = (date: Date) => {
     const dateStr = date.toDateString();
+    const filteredEvents = getFilteredEvents();
     
-    return events.filter(event => {
-      // 处理全天事件
-      if (event.start.date) {
-        const eventDate = new Date(event.start.date);
-        return eventDate.toDateString() === dateStr;
+    return filteredEvents.filter(item => {
+      if (item.eventType === 'task') {
+        // 对于任务，检查due日期
+        if (item.due) {
+          const dueDate = new Date(item.due);
+          return dueDate.toDateString() === dateStr;
+        }
+        return false;
+      } else {
+        // 对于日历事件，检查start日期
+        if (item.start.date) {
+          const eventDate = new Date(item.start.date);
+          return eventDate.toDateString() === dateStr;
+        }
+        
+        if (item.start.dateTime) {
+          const eventStartDate = new Date(item.start.dateTime);
+          return eventStartDate.toDateString() === dateStr;
+        }
+        
+        return false;
       }
-      
-      // 处理有时间的事件
-      if (event.start.dateTime) {
-        const eventStartDate = new Date(event.start.dateTime);
-        return eventStartDate.toDateString() === dateStr;
-      }
-      
-      return false;
     });
   };
 
-  // 格式化时间
-  const formatTime = (event: CalendarEvent) => {
-    if (event.start.dateTime) {
-      const date = new Date(event.start.dateTime);
-      return date.toLocaleTimeString('zh-CN', { 
-        hour: '2-digit', 
-        minute: '2-digit',
-        hour12: false 
-      });
+  // 获取任务状态
+  const getTaskStatus = (task: CalendarEvent) => {
+    if (task.completed) {
+      return 'completed';
     }
-    return '全天';
+    
+    if (task.due) {
+      const dueDate = new Date(task.due);
+      const now = new Date();
+      now.setHours(0, 0, 0, 0);
+      dueDate.setHours(0, 0, 0, 0);
+      
+      if (dueDate < now) {
+        return 'overdue';
+      }
+    }
+    
+    return 'pending';
   };
 
   // 获取事件状态
@@ -436,41 +587,86 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
     }
   };
 
-  // 获取事件状态文本
-  const getEventStatusText = (status: string) => {
-    switch (status) {
-      case 'past':
-        return '已结束';
-      case 'ongoing':
-        return '进行中';
-      case 'upcoming':
-        return '即将开始';
-      default:
-        return '';
+  // 获取状态文本
+  const getStatusText = (item: CalendarEvent) => {
+    if (item.eventType === 'task') {
+      const status = getTaskStatus(item);
+      switch (status) {
+        case 'completed':
+          return '已完成';
+        case 'overdue':
+          return '已逾期';
+        case 'pending':
+          return '待完成';
+        default:
+          return '';
+      }
+    } else {
+      const status = getEventStatus(item);
+      switch (status) {
+        case 'past':
+          return '已结束';
+        case 'ongoing':
+          return '进行中';
+        case 'upcoming':
+          return '即将开始';
+        default:
+          return '';
+      }
     }
   };
 
-  // 获取事件类名
-  const getEventClassName = (event: CalendarEvent) => {
-    const status = getEventStatus(event);
-    
-    if (status === 'past') {
-      return 'event-past';
+  // 获取项目类名
+  const getItemClassName = (item: CalendarEvent) => {
+    if (item.eventType === 'task') {
+      const status = getTaskStatus(item);
+      switch (status) {
+        case 'completed':
+          return 'task-completed';
+        case 'overdue':
+          return 'task-overdue';
+        case 'pending':
+        default:
+          return 'task-pending';
+      }
+    } else {
+      const status = getEventStatus(item);
+      
+      if (status === 'past') {
+        return 'event-past';
+      }
+      
+      if (isWorkRelated(item)) {
+        return 'event-work';
+      }
+      
+      switch (item.status) {
+        case 'confirmed':
+          return 'event-confirmed';
+        case 'tentative':
+          return 'event-tentative';
+        case 'cancelled':
+          return 'event-cancelled';
+        default:
+          return 'event-default';
+      }
     }
-    
-    if (isWorkEvent(event)) {
-      return 'event-work';
-    }
-    
-    switch (event.status) {
-      case 'confirmed':
-        return 'event-confirmed';
-      case 'tentative':
-        return 'event-tentative';
-      case 'cancelled':
-        return 'event-cancelled';
-      default:
-        return 'event-default';
+  };
+
+  // 格式化时间显示
+  const formatTimeDisplay = (item: CalendarEvent) => {
+    if (item.eventType === 'task') {
+      return item.due ? new Date(item.due).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' }) : '';
+    } else {
+      if (item.start.dateTime) {
+        const date = new Date(item.start.dateTime);
+        return date.toLocaleTimeString('zh-CN', { 
+          hour: '2-digit', 
+          minute: '2-digit',
+          hour12: false 
+        });
+      }
+      return '全天';
     }
   };
 
@@ -483,17 +679,15 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
     return checkDate < today;
   };
 
-  // 导航到上个月
+  // 导航函数
   const goToPreviousMonth = () => {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
   };
 
-  // 导航到下个月
   const goToNextMonth = () => {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
   };
 
-  // 导航到今天
   const goToToday = () => {
     setCurrentDate(new Date());
   };
@@ -530,6 +724,39 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
               今天
             </button>
           </div>
+          
+          {/* 过滤按钮 */}
+          <div className="filter-buttons">
+            <button 
+              className={`filter-button ${!showTasksOnly && !showEventsOnly ? 'active' : ''}`}
+              onClick={() => {
+                setShowTasksOnly(false);
+                setShowEventsOnly(false);
+              }}
+            >
+              全部显示
+            </button>
+            <button 
+              className={`filter-button ${showEventsOnly ? 'active' : ''}`}
+              onClick={() => {
+                setShowEventsOnly(!showEventsOnly);
+                setShowTasksOnly(false);
+              }}
+            >
+              <Calendar size={14} />
+              仅显示日程
+            </button>
+            <button 
+              className={`filter-button ${showTasksOnly ? 'active' : ''}`}
+              onClick={() => {
+                setShowTasksOnly(!showTasksOnly);
+                setShowEventsOnly(false);
+              }}
+            >
+              <CheckCircle size={14} />
+              仅显示任务
+            </button>
+          </div>
         </div>
 
         {/* 星期标题 */}
@@ -544,7 +771,7 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
         {/* 日历网格 */}
         <div className="calendar-grid">
           {calendarDays.map((date, index) => {
-            const dayEvents = getEventsForDate(date);
+            const dayItems = getItemsForDate(date);
             const isPast = isPastDate(date);
             const dayClassName = `calendar-day ${
               !isCurrentMonth(date) ? 'other-month' : ''
@@ -562,21 +789,26 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
                   {date.getDate()}
                 </div>
                 
-                {/* 事件列表 */}
+                {/* 事件和任务列表 */}
                 <div className="events-container">
-                  {dayEvents.slice(0, 3).map(event => (
+                  {dayItems.slice(0, 4).map(item => (
                     <div
-                      key={event.id}
-                      onClick={() => setSelectedEvent(event)}
-                      className={`event-item ${getEventClassName(event)}`}
-                      title={`${event.summary} - ${formatTime(event)}`}
+                      key={`${item.eventType}-${item.id}`}
+                      onClick={() => setSelectedEvent(item)}
+                      className={`${item.eventType === 'task' ? 'task-item' : 'event-item'} ${getItemClassName(item)}`}
+                      title={`${item.summary} - ${formatTimeDisplay(item)}`}
                     >
-                      {formatTime(event)} {event.summary}
+                      {item.eventType === 'task' ? (
+                        item.completed ? <CheckCircle className="task-icon" /> : <Circle className="task-icon" />
+                      ) : (
+                        <Calendar className="event-icon" />
+                      )}
+                      <span>{formatTimeDisplay(item)} {item.summary}</span>
                     </div>
                   ))}
-                  {dayEvents.length > 3 && (
+                  {dayItems.length > 4 && (
                     <div className="more-events">
-                      +{dayEvents.length - 3} 更多
+                      +{dayItems.length - 4} 更多
                     </div>
                   )}
                 </div>
@@ -585,20 +817,30 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
           })}
         </div>
 
-        {/* 事件详情弹窗 */}
+        {/* 详情弹窗 */}
         {selectedEvent && (
           <div className="modal-overlay" onClick={() => setSelectedEvent(null)}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
               <div className="modal-header">
                 <h3 className="modal-title">
+                  {selectedEvent.eventType === 'task' ? (
+                    selectedEvent.completed ? <CheckCircle size={20} /> : <Circle size={20} />
+                  ) : (
+                    <Calendar size={20} />
+                  )}
                   {selectedEvent.summary}
-                  <span className={`event-status status-${getEventStatus(selectedEvent)}`}>
-                    {getEventStatusText(getEventStatus(selectedEvent))}
+                  <span className={`${selectedEvent.eventType === 'task' ? 'task-status' : 'event-status'} status-${
+                    selectedEvent.eventType === 'task' ? getTaskStatus(selectedEvent) : getEventStatus(selectedEvent)
+                  }`}>
+                    {getStatusText(selectedEvent)}
                   </span>
-                  {isWorkEvent(selectedEvent) && (
-                    <span className="event-status" style={{background: '#10b981', color: 'white'}}>
-                      工作事项
-                    </span>
+                  {selectedEvent.eventType === 'task' ? (
+                    <span className="task-type-badge">任务</span>
+                  ) : (
+                    <span className="event-type-badge">日程</span>
+                  )}
+                  {isWorkRelated(selectedEvent) && (
+                    <span className="task-list-badge">工作</span>
                   )}
                 </h3>
                 <button
@@ -610,45 +852,80 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
               </div>
               
               <div className="modal-details">
-                {selectedEvent.start.dateTime ? (
-                  <p>
-                    <strong>开始时间:</strong> {new Date(selectedEvent.start.dateTime).toLocaleString('zh-CN')}
-                  </p>
+                {selectedEvent.eventType === 'task' ? (
+                  <>
+                    {selectedEvent.due && (
+                      <p>
+                        <strong>截止日期:</strong> {new Date(selectedEvent.due).toLocaleString('zh-CN')}
+                      </p>
+                    )}
+                    
+                    {selectedEvent.taskList && (
+                      <p>
+                        <strong>任务列表:</strong> {selectedEvent.taskList}
+                      </p>
+                    )}
+                    
+                    <p>
+                      <strong>完成状态:</strong> {selectedEvent.completed ? '已完成' : '未完成'}
+                    </p>
+                    
+                    {selectedEvent.updated && (
+                      <p>
+                        <strong>最后更新:</strong> {new Date(selectedEvent.updated).toLocaleString('zh-CN')}
+                      </p>
+                    )}
+                    
+                    {selectedEvent.notes && (
+                      <div>
+                        <strong>备注:</strong>
+                        <div className="modal-notes">{selectedEvent.notes}</div>
+                      </div>
+                    )}
+                  </>
                 ) : (
-                  <p>
-                    <strong>日期:</strong> {new Date(selectedEvent.start.date || '').toLocaleDateString('zh-CN')} (全天)
-                  </p>
-                )}
-                
-                {selectedEvent.end.dateTime && (
-                  <p>
-                    <strong>结束时间:</strong> {new Date(selectedEvent.end.dateTime).toLocaleString('zh-CN')}
-                  </p>
-                )}
-                
-                {selectedEvent.location && (
-                  <p>
-                    <strong>地点:</strong> {selectedEvent.location}
-                  </p>
-                )}
-                
-                <p>
-                  <strong>状态:</strong> {selectedEvent.status === 'confirmed' ? '已确认' : 
-                                        selectedEvent.status === 'tentative' ? '暂定' : 
-                                        selectedEvent.status === 'cancelled' ? '已取消' : '未知'}
-                </p>
-                
-                {selectedEvent.creator && (
-                  <p>
-                    <strong>创建者:</strong> {selectedEvent.creator.displayName || selectedEvent.creator.email}
-                  </p>
-                )}
-                
-                {selectedEvent.description && (
-                  <div>
-                    <strong>描述:</strong>
-                    <div className="modal-description">{selectedEvent.description}</div>
-                  </div>
+                  <>
+                    {selectedEvent.start.dateTime ? (
+                      <p>
+                        <strong>开始时间:</strong> {new Date(selectedEvent.start.dateTime).toLocaleString('zh-CN')}
+                      </p>
+                    ) : (
+                      <p>
+                        <strong>日期:</strong> {new Date(selectedEvent.start.date || '').toLocaleDateString('zh-CN')} (全天)
+                      </p>
+                    )}
+                    
+                    {selectedEvent.end.dateTime && (
+                      <p>
+                        <strong>结束时间:</strong> {new Date(selectedEvent.end.dateTime).toLocaleString('zh-CN')}
+                      </p>
+                    )}
+                    
+                    {selectedEvent.location && (
+                      <p>
+                        <strong>地点:</strong> {selectedEvent.location}
+                      </p>
+                    )}
+                    
+                    <p>
+                      <strong>状态:</strong> {selectedEvent.status === 'confirmed' ? '已确认' : 
+                                            selectedEvent.status === 'tentative' ? '暂定' : 
+                                            selectedEvent.status === 'cancelled' ? '已取消' : '未知'}
+                    </p>
+                    
+                    {selectedEvent.creator && (
+                      <p>
+                        <strong>创建者:</strong> {selectedEvent.creator.displayName || selectedEvent.creator.email}
+                      </p>
+                    )}
+                    
+                    {selectedEvent.description && (
+                      <div>
+                        <strong>描述:</strong>
+                        <div className="modal-description">{selectedEvent.description}</div>
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
               
@@ -659,7 +936,7 @@ export default function MonthCalendarView({ events = [], onDateRangeChange }: Mo
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    在Google日历中查看
+                    在Google{selectedEvent.eventType === 'task' ? 'Tasks' : 'Calendar'}中查看
                   </a>
                 </div>
               )}
