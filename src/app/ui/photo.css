@@ -61,7 +61,7 @@ body {
 
 .photo-card-image {
   position: relative;
-  aspect-ratio: 4/5;
+  aspect-ratio: 5/5;
   overflow: hidden;
   border-radius: 12px;
   background: #1a1a1a;

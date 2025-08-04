@@ -1,6 +1,7 @@
 // app/photos/components/PhotoCard.tsx - 照片卡片组件
 import Image from 'next/image'
 import Link from 'next/link'
+import '@/ui/photo.css'
 
 export interface Photo {
   id: string
@@ -33,7 +34,7 @@ export function PhotoCard({ photo }: PhotoCardProps) {
           src={photo.thumbnail}
           alt={photo.title}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          sizes="(max-width: 370px) 1vw, (max-width: 1200px) 20vw, 23vw"
         />
         
         <div className="photo-card-overlay">
